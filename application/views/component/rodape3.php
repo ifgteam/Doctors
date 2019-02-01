@@ -7,7 +7,7 @@
 <script type="text/javascript" src="<?= base_url('assets/js/bootstrap.min.js') ?>"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="<?= base_url('assets/js/mdb.min.js') ?>"></script>
-
+<script type="text/javascript" src="<?= base_url('assets/js/cep.js') ?>"></script>
 </body>
 
 </html>
