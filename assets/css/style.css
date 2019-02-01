@@ -1,0 +1,24 @@
+@media (max-width: 1920px){
+    .modal-dialog {
+        max-width: 1500px;
+        margin: 1.75rem auto;
+    }
+}
+@media (max-width: 1600px){
+    .modal-dialog {
+        max-width: 1200px;
+        margin: 1.75rem auto;
+    }
+}
+@media (max-width: 1440px){
+    .modal-dialog {
+        max-width: 1080px;
+        margin: 1.75rem auto;
+    }
+}
+@media (max-width: 768px){
+    .modal-dialog {
+        max-width: 500px;
+        margin: 1.75rem auto;
+    }
+}
