@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Doctors extends CI_Controller {
 
+    function __construct(){
+		parent:: __construct();
+		$this->load->model('PacienteModel', 'm');
+	}
+
     function index(){
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
@@ -42,5 +47,16 @@ class Doctors extends CI_Controller {
         $result = $this->pacientes->mostrarPacientes();
         echo json_encode($result);
     }
+
+
+    public function addPaciente(){
+		$result = $this->m->addPacientes();
+		$msg['success'] = false;
+		$msg['type'] = 'add';
+		if($result){
+			$msg['success'] = true;
+		}
+		echo json_encode($msg);
+	}
 }
 

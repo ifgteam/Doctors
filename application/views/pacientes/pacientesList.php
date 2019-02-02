@@ -2,7 +2,7 @@
 
 
 <div style="margin-top:60px; margin-left:50px; margin-Ok!:50px">
-<button style="margin-top:20px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+<button style="margin-top:20px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal" id="openmymodal">
   INCLUIR PACIÊNTES
 </button>
 <br>
@@ -12,9 +12,7 @@
 </div>
 
 <div class="list-group" >
-<?php foreach($pacientes as $paciente){?>
-  <a href="#!" style="text-align: center" class="list-group-item list-group-item-action"> <?=$paciente->nome;?></a>
-  <?php } ?> 
+
 </div>
 <table class="table table-bordered table-responsive" style="margin-top: 20px;">
 		<thead>
@@ -25,38 +23,9 @@
 		<tbody>
     <div class="list-group"  id="showdata">
 
-   
- 
     </div>
 		</tbody>
 	</table>
-<script>
-	$(function(){
-		mostrarPacientes();
-		//function
-		function mostrarPacientes(){
-			$.ajax({
-				type: 'ajax',
-				url: '<?php echo base_url() ?>Doctors/mostrarPacientes',
-				async: false,
-				dataType: 'json',
-				success: function(data){
-					var html = '';
-					var i;
-					for(i=0; i<data.length; i++){
-						html +=
-            '<a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'data[i].nome'</a>'	;
-					}
-					$('#showdata').html(html);
-				},
-				error: function(){
-					alert('Não foi possivel encontrar pacientes');
-				}
-			});
-		}
-	});
-
-</script>
 
 <!-- Modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -70,22 +39,24 @@
       </div>
       
       <div class="modal-body mx-3">
+      <form method="POST" id="myForm">
         <div class="md-form mb-5">
           <input type="text" name="nome" id="nome" class="form-control validate">
           <label data-error="" data-success="Ok!" for="nome">Nome</label>
         </div>
 
         <div class="md-form mb-5">
-          <input type="text" name="nomeresponsavel" id="nomeresponsavel" class="form-control validate">
-          <label data-error="Insira um email valido" data-success="Ok!" for="form34">Nome do responsável</label>
-        </div>
-
-        <div class="md-form mb-5">
           <input type="email" id="email" name="email" class="form-control validate">
           <label data-error="wrong" data-success="Ok!" for="email">email</label>
         </div>
-
+      </form>
+         <!-- 
         <div class="md-form mb-5">
+          <input type="text" name="nomeresponsavel" id="nomeresponsavel" class="form-control validate">
+          <label data-error="Insira um email valido" data-success="Ok!" for="form34">Nome do responsável</label>
+        </div> -->
+
+        <!-- <div class="md-form mb-5">
           <input type="text" id="datanas" name="datanas" class="form-control validate">
           <label data-error="wrong" data-success="Ok!" for="datanas">Data de nascimento</label>
         </div>
@@ -173,14 +144,79 @@
         <div class="md-form">
           <textarea type="text" id="obs" name="obs" class="md-textarea form-control" rows="3"></textarea>
           <label data-error="wrong" data-success="Ok!" for="obs">Observação</label>
-        </div>
+        </div> -->
 
       </div>
       
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="btn-save">Salvar</button>
+      <div class="modal-footer" id="mf">
+        <button type="button" class="btn btn-secondary" id="cancel">Cancelar</button>
+        <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+<script>
+$(function(){
+
+  // define a função pra mostrar os pacientes
+  mostrarPacientes();
+
+
+  // ao clicar no btn ele adicona o action
+    $('#openmymodal').click(function(){
+			$('#myForm').attr('action', '<?php echo base_url() ?>Doctors/addPaciente');
+    });
+    
+  // ao clicar para salvar ele executa a função do ajax
+  $('#btnSave').click(function(){
+      var url = $('#myForm').attr('action');
+			var data = $('#myForm').serialize();
+    $(function(){addPaciente();
+      //function
+      function addPaciente(){
+        $.ajax({
+          type: 'ajax',
+          method: 'post',
+          url: url,
+          data: data,
+          async: false,
+          dataType: 'json',
+          success: function(response){
+            $('#basicExampleModal').modal('hide');
+            $('#myForm')[0].reset();
+            alert('Paciente Cadastrado');
+            mostrarPacientes();
+            
+          },
+          error: function(){
+            alert('Não foi posivel cadastrar');
+          }
+        });
+      }
+    });
+  });
+
+  //mostrar pacientes cadastrados
+  function mostrarPacientes(){
+			$.ajax({
+				type: 'ajax',
+				url: '<?php echo base_url() ?>Doctors/mostrarPacientes',
+				async: false,
+				dataType: 'json',
+				success: function(data){
+					var html = '';
+					var i;
+					for(i=0; i<data.length; i++){
+						html +=
+            '<a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'+data[i].nome+'</a>'	;
+					}
+					$('#showdata').html(html);
+				},
+				error: function(){
+					alert('Não foi possivel encontrar pacientes');
+				}
+			});
+    }
+  });
+
+</script>
