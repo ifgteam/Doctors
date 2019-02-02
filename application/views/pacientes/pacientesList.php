@@ -16,7 +16,47 @@
   <a href="#!" style="text-align: center" class="list-group-item list-group-item-action"> <?=$paciente->nome;?></a>
   <?php } ?> 
 </div>
+<table class="table table-bordered table-responsive" style="margin-top: 20px;">
+		<thead>
+			<tr>
+				<td>Nome</td>
+			</tr>
+		</thead>
+		<tbody>
+    <div class="list-group"  id="showdata">
 
+   
+ 
+    </div>
+		</tbody>
+	</table>
+<script>
+	$(function(){
+		mostrarPacientes();
+		//function
+		function mostrarPacientes(){
+			$.ajax({
+				type: 'ajax',
+				url: '<?php echo base_url() ?>Doctors/mostrarPacientes',
+				async: false,
+				dataType: 'json',
+				success: function(data){
+					var html = '';
+					var i;
+					for(i=0; i<data.length; i++){
+						html +=
+            '<a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'data[i].nome'</a>'	;
+					}
+					$('#showdata').html(html);
+				},
+				error: function(){
+					alert('Não foi possivel encontrar pacientes');
+				}
+			});
+		}
+	});
+
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

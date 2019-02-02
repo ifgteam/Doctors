@@ -9,5 +9,9 @@ class PacienteModel extends CI_Model{
         $this->db->select('*');
         return $this->db->get('medico')->result();
     }
+    public function mostrarPacientes(){
+        $this->db->select('*');
+        return $this->db->get('pacientes')->result();
+    }
 
 }

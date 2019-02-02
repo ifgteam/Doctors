@@ -37,5 +37,10 @@ class Doctors extends CI_Controller {
         echo $this->db->get("data")->row('data');
 
     }
+    public function mostrarPacientes(){
+        $this->load->model('PacienteModel','pacientes');
+        $result = $this->pacientes->mostrarPacientes();
+        echo json_encode($result);
+    }
 }
 
