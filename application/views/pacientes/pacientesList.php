@@ -239,7 +239,9 @@ $(function(){
 					$('#showdata').html(html);
 				},
 				error: function(){
-					alert('Não foi possivel encontrar pacientes');
+          var html = '';
+          html += '<strong class="text-center">Nenhum paciente cadastrado</strong>'
+          $('#showdata').html(html);
 				}
 			});
     }

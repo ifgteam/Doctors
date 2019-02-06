@@ -11,14 +11,14 @@ class PacienteModel extends CI_Model{
     }
     public function mostrarPacientes(){
         $this->db->select('*');
-        return $this->db->get('teste')->result();
+        return $this->db->get('pacientes')->result();
     }
     public function addPacientes(){
         $field = array(
 			'nome'=>$this->input->post('nome'),
 			'email'=>$this->input->post('email'),
 		);
-        $this->db->insert('teste', $field);
+        $this->db->insert('pacientes', $field);
         if($this->db->affected_rows() > 0){
 			return true;
 		}else{
@@ -29,12 +29,11 @@ class PacienteModel extends CI_Model{
     function deletePaciente(){
 		$id = $this->input->get('id');
 		$this->db->where('id', $id);
-		$this->db->delete('teste');
+		$this->db->delete('pacientes');
 		if($this->db->affected_rows() > 0){
 			return true;
 		}else{
 			return false;
 		}
 	}
-
 }
