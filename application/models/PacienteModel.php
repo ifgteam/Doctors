@@ -13,6 +13,7 @@ class PacienteModel extends CI_Model{
         $this->db->select('*');
         return $this->db->get('pacientes')->result();
     }
+    
     public function addPacientes(){
         $field = array(
 			'nome'=>$this->input->post('nome'),
@@ -25,7 +26,20 @@ class PacienteModel extends CI_Model{
 			return false;
 		}
     }
-
+    public function atualizarPacientes(){
+        $id = $this->input->get('id');
+		$this->db->where('id', $id);
+        $field = array(
+			'nome'=>$this->input->post('nome'),
+			'email'=>$this->input->post('email'),
+		);
+        $this->db->update('pacientes', $field);
+        if($this->db->affected_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+    }
     function deletePaciente(){
 		$id = $this->input->get('id');
 		$this->db->where('id', $id);

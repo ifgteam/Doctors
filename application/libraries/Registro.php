@@ -20,6 +20,7 @@ class Registro{
         else return null;
         
     }
+    
     //insere o usuario na tabela login
     public function register($data){
         $aux['nome'] = $data['nome'];

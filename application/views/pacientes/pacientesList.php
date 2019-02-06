@@ -6,26 +6,15 @@
   INCLUIR PACIÊNTES
 </button>
 <br>
+<hr>
 
-<div class="md-form">
-  <input type="text" id="form1" class="form-control">
-</div>
-
-<div class="list-group" >
-
-</div>
-<table class="table table-bordered table-responsive" style="margin-top: 20px;">
+<h1 class="text-center">Pacientes</h1>
+<table class="table table-bordered table-responsive mt-5">
 		<thead>
-			<tr>
-				<td>Nome</td>
-			</tr>
+        <tr id="showdata"></tr>
 		</thead>
-		<tbody>
-    <div class="list-group"  id="showdata">
-
-    </div>
-		</tbody>
-	</table>
+  </table>
+  
 
 <!-- Modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -49,6 +38,7 @@
           <input type="email" id="email" name="email" class="form-control validate">
           <label data-error="wrong" data-success="Ok!" for="email">email</label>
         </div>
+          <input type="hidden" id="id">
       </form>
          <!-- 
         <div class="md-form mb-5">
@@ -149,8 +139,8 @@
       </div>
       
       <div class="modal-footer" id="mf">
-        <button type="button" class="btn btn-secondary" id="cancel">Cancelar</button>
-        <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-danger" id="cancel">Cancelar</button>
+        <button type="button" class="btn btn-primary salvar">Salvar</button>
       </div>
     </div>
   </div>
@@ -164,7 +154,16 @@ $(function(){
 
   // ao clicar no btn ele adicona o action
     $('#openmymodal').click(function(){
-			$('#myForm').attr('action', '<?php echo base_url() ?>Doctors/addPaciente');
+      $('#myForm').attr('action', '<?php echo base_url() ?>Doctors/addPaciente');
+      $('.salvar').attr('id', 'btnSave');
+    });
+
+    $('#atualizarPaciente').click(function(){
+      $('.salvar').removeAttr('id');
+      $('#myForm').attr('action', '<?php echo base_url() ?>Doctors/atualizarPaciente');
+      $('.salvar').attr('id', 'btnAtt');
+      $id = $('#atualizarPaciente').attr('data');
+      $('#id').attr('data', $id);
     });
     
   // ao clicar para salvar ele executa a função do ajax
@@ -184,7 +183,6 @@ $(function(){
           success: function(response){
             $('#basicExampleModal').modal('hide');
             $('#myForm')[0].reset();
-            alert('Paciente Cadastrado');
             mostrarPacientes();
             
           },
@@ -195,6 +193,38 @@ $(function(){
       }
     });
   });
+
+  $('#btnAtt').click(function(){
+      var url = $('#myForm').attr('action');
+			var data = $('#myForm').serialize();
+    $(function(){addPaciente();
+      //function
+      function addPaciente(){
+        $.ajax({
+          type: 'ajax',
+          method: 'get',
+          url: url,
+          data: {id:id},
+          async: false,
+          dataType: 'json',
+          success: function(response){
+            $('#basicExampleModal').modal('hide');
+            $('#myForm')[0].reset();
+            alert('deu bom');
+            mostrarPacientes();
+            
+          },
+          error: function(){
+            alert('Não foi posivel cadastrar');
+          }
+        });
+      }
+    });
+  });
+
+
+
+
 
 
   //delete- 
@@ -230,12 +260,13 @@ $(function(){
 				dataType: 'json',
 				success: function(data){
 					var html = '';
-					var i;
+          var i;
 					for(i=0; i<data.length; i++){
 						html +=
-            '<div class="row"><a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'+data[i].nome+'</a>'+
-            '<a href="javascript:;" id="deletePaciente" class="btn btn-danger item-delete" data="'+data[i].id+'">Delete</a> </div>'	;
-					}
+            '<td class="paciente-name" width="100%">'+data[i].nome+'</td>'+
+            '<td><a href="javascript:;" id="atualizarPaciente" class="btn btn-blue item-atualizar" data-toggle="modal" data-target="#basicExampleModal" data="'+data[i].id+'">Editar</a> </td>'	+
+            '<td><a href="javascript:;" id="arquivarPaciente" class="btn btn-orange item-arquivar" data="'+data[i].id+'">Arquivar</a> </td>'	+
+            '<td><a href="javascript:;" id="deletePaciente" class="btn btn-danger item-delete" data="'+data[i].id+'">Deletar</a> </td>'	;					}
 					$('#showdata').html(html);
 				},
 				error: function(){

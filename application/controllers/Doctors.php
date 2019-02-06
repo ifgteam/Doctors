@@ -58,6 +58,16 @@ class Doctors extends CI_Controller {
 		}
 		echo json_encode($msg);
     }
+
+    public function AtualizaPaciente(){
+		$result = $this->m->AtualizaPacientes();
+		$msg['success'] = false;
+		$msg['type'] = 'Atualiza';
+		if($result){
+			$msg['success'] = true;
+		}
+		echo json_encode($msg);
+    }
     
     
 	public function deletePaciente(){
