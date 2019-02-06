@@ -26,4 +26,15 @@ class PacienteModel extends CI_Model{
 		}
     }
 
+    function deletePaciente(){
+		$id = $this->input->get('id');
+		$this->db->where('id', $id);
+		$this->db->delete('teste');
+		if($this->db->affected_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }

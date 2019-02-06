@@ -19,8 +19,7 @@ class Doctors extends CI_Controller {
  
  
     }
-       function quadro(){
-        
+       function pacientes(){
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
         $this->load->view('component/navbar'); 
@@ -30,6 +29,7 @@ class Doctors extends CI_Controller {
         $this->load->view('component/rodape3');    
             
     }
+    
     function cadastrarPaciente(){
         $this->load->model('FuncionariosModel','funcionarios');  
         $this->funcionarios->cadastrar();
@@ -53,6 +53,16 @@ class Doctors extends CI_Controller {
 		$result = $this->m->addPacientes();
 		$msg['success'] = false;
 		$msg['type'] = 'add';
+		if($result){
+			$msg['success'] = true;
+		}
+		echo json_encode($msg);
+    }
+    
+    
+	public function deletePaciente(){
+		$result = $this->m->deletePaciente();
+		$msg['success'] = false;
 		if($result){
 			$msg['success'] = true;
 		}

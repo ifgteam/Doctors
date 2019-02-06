@@ -196,6 +196,31 @@ $(function(){
     });
   });
 
+
+  //delete- 
+  $('#deletePaciente').on('click', function(){
+			var id = $(this).attr('data');
+				$.ajax({
+					type: 'ajax',
+					method: 'get',
+					async: false,
+					url: '<?php echo base_url() ?>Doctors/deletePaciente',
+					data:{id:id},
+					dataType: 'json',
+					success: function(response){
+						if(response.success){
+							alert('Paciente Deletado');
+							mostrarPacientes();
+						}else{
+							alert('Não foi posivel deletar');
+						}
+					},
+					error: function(){
+						alert('Error deleting');
+					}
+				});
+		});
+
   //mostrar pacientes cadastrados
   function mostrarPacientes(){
 			$.ajax({
@@ -208,7 +233,8 @@ $(function(){
 					var i;
 					for(i=0; i<data.length; i++){
 						html +=
-            '<a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'+data[i].nome+'</a>'	;
+            '<div class="row"><a  href="#!" style="text-align: center" class="list-group-item list-group-item-action">'+data[i].nome+'</a>'+
+            '<a href="javascript:;" id="deletePaciente" class="btn btn-danger item-delete" data="'+data[i].id+'">Delete</a> </div>'	;
 					}
 					$('#showdata').html(html);
 				},

@@ -19,10 +19,10 @@
                     <!-- Left -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>Doctors/index" target="_parent">AGENDA</a>
+                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>" target="_parent">AGENDA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>Doctors/quadro" target="_parent">PACIÊNTES</a>
+                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>pacientes" target="_parent">PACIÊNTES</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect white-text" href="<?=base_url()?>Doctors/" target="_parent">ADMINISTRAÇÃO</a>
