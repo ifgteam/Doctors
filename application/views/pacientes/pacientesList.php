@@ -10,8 +10,8 @@
 
 <h1 class="text-center">Pacientes</h1>
 <table class="table table-bordered table-responsive mt-5">
-		<thead>
-        <tr id="showdata"></tr>
+		<thead id="showdata">
+        
 		</thead>
   </table>
   
@@ -38,15 +38,20 @@
           <input type="email" id="email" name="email" class="form-control validate">
           <label data-error="wrong" data-success="Ok!" for="email">email</label>
         </div>
-          <input type="hidden" id="id">
-      </form>
-         <!-- 
+        
+      
+         
         <div class="md-form mb-5">
           <input type="text" name="nomeresponsavel" id="nomeresponsavel" class="form-control validate">
           <label data-error="Insira um email valido" data-success="Ok!" for="form34">Nome do responsável</label>
-        </div> -->
+        </div>
 
-        <!-- <div class="md-form mb-5">
+        <div class="md-form mb-5">
+          <input type="text" id="sexo" name="sexo" class="form-control validate">
+          <label data-error="wrong" data-success="Ok!" for="sexo">sexo</label>
+        </div>
+
+        <div class="md-form mb-5">
           <input type="text" id="datanas" name="datanas" class="form-control validate">
           <label data-error="wrong" data-success="Ok!" for="datanas">Data de nascimento</label>
         </div>
@@ -91,7 +96,7 @@
         </div>
 
         <div class="md-form mb-5">
-          <input type="text" id="numero" name= class="form-control validate" placeholder="Numero">
+          <input type="text" id="numero" name="numero" class="form-control validate" placeholder="Numero">
         </div>
 
         <div class="md-form mb-5">
@@ -134,13 +139,13 @@
         <div class="md-form">
           <textarea type="text" id="obs" name="obs" class="md-textarea form-control" rows="3"></textarea>
           <label data-error="wrong" data-success="Ok!" for="obs">Observação</label>
-        </div> -->
-
+        </div>
+        </form>
       </div>
       
       <div class="modal-footer" id="mf">
         <button type="button" class="btn btn-danger" id="cancel">Cancelar</button>
-        <button type="button" class="btn btn-primary salvar">Salvar</button>
+        <button id="btnSave" type="button" class="btn btn-primary salvar">Salvar</button>
       </div>
     </div>
   </div>
@@ -155,7 +160,6 @@ $(function(){
   // ao clicar no btn ele adicona o action
     $('#openmymodal').click(function(){
       $('#myForm').attr('action', '<?php echo base_url() ?>Doctors/addPaciente');
-      $('.salvar').attr('id', 'btnSave');
     });
 
     $('#atualizarPaciente').click(function(){
@@ -186,8 +190,9 @@ $(function(){
             mostrarPacientes();
             
           },
-          error: function(){
-            alert('Não foi posivel cadastrar');
+          error: function(xhr, status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            alert(err.Message);
           }
         });
       }
@@ -263,10 +268,10 @@ $(function(){
           var i;
 					for(i=0; i<data.length; i++){
 						html +=
-            '<td class="paciente-name" width="100%">'+data[i].nome+'</td>'+
+            '<tr><td class="paciente-name" width="100%">'+data[i].nome+'</td>'+
             '<td><a href="javascript:;" id="atualizarPaciente" class="btn btn-blue item-atualizar" data-toggle="modal" data-target="#basicExampleModal" data="'+data[i].id+'">Editar</a> </td>'	+
             '<td><a href="javascript:;" id="arquivarPaciente" class="btn btn-orange item-arquivar" data="'+data[i].id+'">Arquivar</a> </td>'	+
-            '<td><a href="javascript:;" id="deletePaciente" class="btn btn-danger item-delete" data="'+data[i].id+'">Deletar</a> </td>'	;					}
+            '<td><a href="javascript:;" id="deletePaciente" class="btn btn-danger item-delete" data="'+data[i].id+'">Deletar</a> </td></tr>'	;					}
 					$('#showdata').html(html);
 				},
 				error: function(){
