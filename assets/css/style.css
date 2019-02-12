@@ -25,3 +25,14 @@
 .paciente-name{
     font-size: 24px;
 }
+.btn-paciente{
+  border: 0;
+  background: none;
+  cursor: pointer;
+  outline: 0;
+  text-align: left;
+  width: 100%;
+}
+.btn-paciente:focus{
+  outline: 0;
+}

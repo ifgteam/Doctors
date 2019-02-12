@@ -8,7 +8,7 @@ class Doctors extends CI_Controller {
 		$this->load->model('PacienteModel', 'm');
 	}
 
-    function index(){
+    public function index(){
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
         $this->load->model('PacienteModel','especialistas');
@@ -16,25 +16,24 @@ class Doctors extends CI_Controller {
         $this->load->view('agenda/agenda',$especialistas);
         $this->load->view('component/navbar');
         $this->load->view('component/rodape3');
- 
- 
     }
-       function pacientes(){
+
+    public function pacientes(){
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
-        $this->load->view('component/navbar'); 
+        $this->load->view('component/navbar');
         $this->load->model('PacienteModel','pacientes');
-        $dados['pacientes'] = $this->pacientes->get_pacientes();  
-        $this->load->view('pacientes/pacientesList',$dados);     
-        $this->load->view('component/rodape3');    
-            
+        $dados['pacientes'] = $this->pacientes->get_pacientes();
+        $this->load->view('pacientes/pacientesList',$dados);
+        $this->load->view('component/rodape3');
     }
-    
+
     function cadastrarPaciente(){
-        $this->load->model('FuncionariosModel','funcionarios');  
+        $this->load->model('FuncionariosModel','funcionarios');
         $this->funcionarios->cadastrar();
     }
-    function prontuario(){
+
+    public function prontuario(){
 
     }
     function buscarData(){
@@ -68,8 +67,15 @@ class Doctors extends CI_Controller {
 		}
 		echo json_encode($msg);
     }
-    
-    
+    public function arquivarPaciente(){
+      $result = $this->m->arquivarPaciente();
+      $msg['success'] = false;
+      if($result){
+        $msg['success'] = true;
+      }
+      echo json_encode($msg);
+    }
+
 	public function deletePaciente(){
 		$result = $this->m->deletePaciente();
 		$msg['success'] = false;
@@ -79,4 +85,3 @@ class Doctors extends CI_Controller {
 		echo json_encode($msg);
 	}
 }
-

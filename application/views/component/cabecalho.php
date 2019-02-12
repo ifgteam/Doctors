@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
 
     <!-- Material Design Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -35,16 +37,7 @@
 <!-- Custom styles for this template -->
 <link href="dashboard.css" rel="stylesheet">
 <script src="<?= base_url('assets/js/alertify.js')?>"></script>
-<script src="<?= base_url('assets/js/jquery-1.11.1.min.js')?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/jquery.min.js')?>"></script>
+<script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/notification.js')?>"></script>
-
-<script type="text/javascript"
-    src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-</script>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script> 
-<script type="text/javascript" src="script.js"></script> 
 </head>
 <body>
-  

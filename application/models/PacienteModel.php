@@ -11,14 +11,22 @@ class PacienteModel extends CI_Model{
     }
     public function mostrarPacientes(){
         $this->db->select('*');
-        return $this->db->get('pacientes')->result();
+        return $this->db->get_where('pacientes', 'status = 1')->result();
     }
 
     public function addPacientes(){
+      $var = $this->input->post('datanas');
+      $date = str_replace('/', '-', $var);
+      $nascimento = date('Y-m-d', strtotime($date));
+
+      $var2 = $this->input->post('dataconvenio');
+      $date2 = str_replace('/', '-', $var2);
+      $dataconvenio = date('Y-m-d', strtotime($date2));
         $field = array(
 			      'nome'=>$this->input->post('nome'),
             'email'=>$this->input->post('email'),
             'nomeResponsavel'=>$this->input->post('nomeresponsavel'),
+            'dataNascimento'=>$nascimento,
             'sexo'=>$this->input->post('sexo'),
             'estadoCivil'=>$this->input->post('estadocivil'),
             'indicacao'=>$this->input->post('indicacao'),
@@ -34,6 +42,7 @@ class PacienteModel extends CI_Model{
             'cidade'=>$this->input->post('cidade'),
             'estado'=>$this->input->post('uf'),
             'convenio'=>$this->input->post('convenio'),
+            'dataConvenio'=>$dataconvenio,
             'plano'=>$this->input->post('plano'),
             'numeroConvenio'=>$this->input->post('numconvenio'),
             'observacao'=>$this->input->post('obs'),
@@ -59,6 +68,13 @@ class PacienteModel extends CI_Model{
 			return false;
 		}
     }
+
+    function arquivarPaciente(){
+      $id = $this->input->get('id');
+      $data = array('status' => 0);
+      $this->db->update('pacientes', $data, array('id' => $id));
+    }
+    
     function deletePaciente(){
 		$id = $this->input->get('id');
 		$this->db->where('id', $id);
