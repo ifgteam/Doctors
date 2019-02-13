@@ -36,3 +36,20 @@
 .btn-paciente:focus{
   outline: 0;
 }
+.modal-pequeno{
+  top: 30%;
+  width: 600px;
+  height: auto;
+  margin: auto;
+  text-align: center;
+
+}
+.modal-pequeno > .modal-dialog > .modal-content{
+  padding: 50px 0px;
+}
+h1.h1-concluido{
+  font-size: 26px;
+}
+strong{
+  font-weight: 700;
+}

@@ -2,8 +2,8 @@
 
 
 <div style="margin-top:60px; margin-left:50px; margin-Ok!:50px">
-<button style="margin-top:20px" type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal" id="openmymodal">
-  INCLUIR PACIÊNTES
+<button style="margin-top:20px; text-transform: none; font-weight: 700; font-size: 15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal" id="openmymodal">
+  Adicionar Paciente
 </button>
 <br>
 <hr>
@@ -18,7 +18,7 @@
 
 
 <!-- modal delete -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade modal-pequeno" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="container">
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="arquivaModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal-pequeno" id="arquivaModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="container">
@@ -47,6 +47,30 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade modal-pequeno" id="ModalDeleteSucess" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="container">
+        <h1 class="h1-concluido">Paciente excluido com sucesso!</h1>
+        <br><button class="close-modal btn btn-sucess">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-pequeno" id="ModalarquivadoSucess" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="container">
+        <h1 class="h1-concluido">Paciente arquivado com sucesso!</h1>
+        <br><button class="close-modal btn btn-sucess">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -187,7 +211,9 @@
 <script>
 
 $(function(){
-
+  $('.close-modal').click(function(){
+    $('.show').modal('hide');
+  });
   // define a função pra mostrar os pacientes
   mostrarPacientes();
 
@@ -280,9 +306,7 @@ $(function(){
           success: function(response){
             $('#basicExampleModal').modal('hide');
             $('#myForm')[0].reset();
-            alert('deu bom');
             mostrarPacientes();
-
           },
           error: function(){
             alert('Não foi posivel cadastrar');
@@ -309,10 +333,10 @@ $(function(){
 					dataType: 'json',
 					success: function(response){
 						if(response.success){
-							alert('Paciente Deletado');
               $('#deleteModal').modal('hide');
               location.reload();
 							mostrarPacientes();
+              $('#ModalDeleteSucess').modal('show');
 						}else{
 							alert('Não foi posivel deletar');
 						}
@@ -335,11 +359,11 @@ $(function(){
             dataType: 'json',
             success: function(response){
               if(response){
-                alert('Paciente arquivado');
                 $('#arquivaModal').modal('hide');
                 location.reload();
                 mostrarPacientes();
-                
+                $('#ModalarquivadoSucess').modal('show');
+
               }
             },
             error: function(){
@@ -359,13 +383,25 @@ $(function(){
 					var html = '';
           var i;
 					for(i=0; i<data.length; i++){
+            $dataN = data[i].dataNascimento.split("-").reverse().join("/");
+            $dataC = data[i].dataConvenio.split("-").reverse().join("/");
 						html +=
             '<tr id="headingOne"><td class="paciente-name" width="100%"><button class="btn-paciente" data-toggle="collapse" data-target="#collapse'+i+'" aria-expanded="true" aria-controls="collapse'+i+'">'+data[i].nome+'</button></td>'+
             '<td><a href="javascript:;" class="btn btn-blue atualizarPaciente" data-toggle="modal" data-target="#basicExampleModal" data="'+data[i].id+'" nome="'+data[i].nome+'" responsavel="'+data[i].nomeResponsavel+'"  email="'+data[i].email+'" sexo="'+data[i].sexo+'" sexo="'+data[i].sexo+'" >Editar</a></td>'	+
             '<td><a class="btn btn-orange arquivarPaciente" data-toggle="modal" data-target="#arquivaModal" data="'+data[i].id+'">Arquivar</a> </td>'	+
-            '<td><a class="btn btn-danger deletarpaciente" data-toggle="modal" data-target="#deleteModal" data="'+data[i].id+'">Deletar</a> </td></tr>'+
+            '<td><a class="btn btn-danger deletarpaciente" data-toggle="modal" data-target="#deleteModal" data="'+data[i].id+'">Deletar</a></td></tr>'+
             '<tr id="collapse'+i+'" class="collapse" aria-labelledby="heading'+i+'">'+
-            '<td>dados do fela da puta<td></tr>';
+            '<td colspan="42"><table width="100%"><tr><td><strong>email</strong></td><td><strong>Nome do Responsavel</strong></td><td><strong>Sexo</strong></td><td><strong>Data de Nascimento</strong></td></tr>'+
+            '<tr><td>'+data[i].email+'</td><td>'+data[i].nomeResponsavel+'</td><td>'+data[i].sexo+'</td><td>'+$dataN+'</tr>'+
+            '<tr><td><strong>Estado Civil</strong></td><td><strong>Indicação</strong></td><td><strong>CPF</strong></td><td><strong>Celular</strong></td></tr>'+
+            '<tr><td>'+data[i].estadoCivil+'</td><td>'+data[i].indicacao+'</td><td>'+data[i].cpf+'</td><td>'+data[i].celular+'</td></tr>'+
+            '<tr><td><strong>Telefone Fixo</strong></td><td><strong>Telefone Adicional</strong></td><td colspan="42"><strong>Endereço</strong></td></tr>'+
+            '<tr><td>'+data[i].telefone+'</td><td>'+data[i].telefoneAdicional+'</td><td colspan="42">'+data[i].rua+', '+data[i].numero+', '+data[i].cidade+', '+data[i].estado+'</td></tr>'+
+            '<tr><td><strong>Convenio</strong></td><td><strong>Plano</strong></td><td><strong>Numero do Convenio</strong></td><td><strong>Data do Convenio</strong></td></tr>'+
+            '<tr><td>'+data[i].convenio+'</td><td>'+data[i].plano+'</td><td>'+data[i].numeroConvenio+'</td><td>'+$dataC+'</td></tr></tr>'+
+            '<tr><td width="100%" colspan="50"><strong>Observação</strong></td></tr>'+
+            '<tr><td colspan="50" width="100%">'+data[i].observacao+'</td></tr>'+
+            '</table></td></tr>';
             		}
 					$('#showdata').html(html);
 				},
