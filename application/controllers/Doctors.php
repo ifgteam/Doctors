@@ -59,7 +59,7 @@ class Doctors extends CI_Controller {
     }
 
     public function AtualizaPaciente(){
-		$result = $this->m->AtualizaPacientes();
+		$result = $this->m->atualizarPacientes();
 		$msg['success'] = false;
 		$msg['type'] = 'Atualiza';
 		if($result){
@@ -67,6 +67,8 @@ class Doctors extends CI_Controller {
 		}
 		echo json_encode($msg);
     }
+
+    
     public function arquivarPaciente(){
       $result = $this->m->arquivarPaciente();
       $msg['success'] = false;

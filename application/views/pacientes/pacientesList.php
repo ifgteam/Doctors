@@ -72,7 +72,19 @@
 </div>
 
 
-<!-- Modal -->
+<div class="modal fade modal-pequeno" id="ModalEditadoSucess" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="container">
+        <h1 class="h1-concluido">Paciente editado com sucesso!</h1>
+        <br><button class="close-modal btn btn-sucess">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal inserir paciente -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -208,6 +220,145 @@
     </div>
   </div>
 </div>
+
+<!-- Modal editar paciente -->
+<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="ModalEdit"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body mx-3">
+      <form method="POST" id="myFormEdit" action="<?php echo base_url() ?>Doctors/AtualizaPaciente">
+        <div class=" mb-5">
+          <label>Nome</label>
+          <input type="text" name="nome" id="nome" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Email</label>
+          <input type="email" id="email" name="email" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Nome do responsavel</label>
+          <input type="text" name="nomeresponsavel" id="nomeresponsavel" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Sexo</label>
+          <input type="text" id="sexo" name="sexo" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Data de Nascimento</label>
+          <input id="datanas" name="datanas" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Estado Civil</label>
+          <input type="text" id="estadocivil" name="estadocivil" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Indicação</label>
+          <input type="text" id="indicacao" name="indicacao" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>CPF</label>
+          <input type="text" id="cpf" name="cpf" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Telefone Celular</label>
+          <input type="text" id="celular" name="celular" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Telefone Residencial</label>
+          <input type="text" id="telfixo" name="telfixo" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Telefone Adicional</label>
+          <input type="text" id="teladicio" name="teladicio" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>CEP</label>
+          <input type="text" id="cepE" name="cep" class="form-control validate" maxlength="9">
+        </div>
+
+        <div class=" mb-5">
+          <label>Rua</label>
+          <input type="text" id="ruaE" name="rua" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Numero</label>
+          <input type="text" id="numero" name="numero" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Complemento</label>
+          <input type="text" id="complemento" name="complemento" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Bairro</label>
+          <input type="text" id="bairroE" name="bairro" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Cidade</label>
+          <input type="text" id="cidadeE" name="cidade" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Estado</label>
+          <input type="text" id="ufE" name="uf" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Convenio</label>
+          <input type="text" id="convenio" name="convenio" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Plano</label>
+          <input type="text" id="plano" name="plano" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Numero do convenio</label>
+          <input type="text" id="numconvenio" name="numconvenio" class="form-control validate">
+        </div>
+
+        <div class=" mb-5">
+          <label>Data do convenio</label>
+          <input id="dataconvenio" name="dataconvenio" class="form-control validate">
+        </div>
+
+        <div class="">
+          <label>observacao</label>
+          <textarea type="text" id="obs" name="obs" class="md-textarea form-control" rows="3"></textarea>
+        </div>
+        <input hidden name="idAtt">
+        </form>
+      </div>
+
+      <div class="modal-footer" id="mf">
+        <button type="button" class="btn btn-danger" id="cancel">Cancelar</button>
+        <input type="submit" class="btn btn-primary" id="btnAtt" value="Editar">
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 
 $(function(){
@@ -270,43 +421,87 @@ $(function(){
   });
 
 
-  //pegando os dados para edição
   $('.atualizarPaciente').click(function(){
-    $('#myForm').attr('action', '<?php echo base_url() ?>Doctors/atualizarPaciente');
-    $('#myForm')[0].reset();
-    $id = $(this).attr('data');
-    $('#id').attr('data', $id);
+    $('#myFormEdit').attr('action', '<?php echo base_url() ?>Doctors/AtualizaPaciente');
+    var id = $(this).attr('dataId');
+    $('#btnAtt').attr('data', id);
 
     var nome = $(this).attr('nome');
     var email = $(this).attr('email');
     var responsavel = $(this).attr('responsavel');
     var sexo = $(this).attr('sexo');
+    var estadoCivil = $(this).attr('estadoCivil');
+    var indicacao = $(this).attr('indicacao');
+    var dataNas = $(this).attr('nascimento');
+    var cpf = $(this).attr('cpf');
+    var celular = $(this).attr('celular');
+    var telefone = $(this).attr('telefone');
+    var telefoneAdicional = $(this).attr('telefoneAdicional');
+    var cep = $(this).attr('cep');
+    var rua = $(this).attr('rua');
+    var numero = $(this).attr('numero');
+    var complemento = $(this).attr('complemento');
+    var bairro = $(this).attr('bairro');
+    var cidade = $(this).attr('cidade');
+    var uf = $(this).attr('uf');
+    var convenio = $(this).attr('convenio');
+    var dataConvenio = $(this).attr('dataConvenio');
+    var plano = $(this).attr('plano');
+    var numeroConvenio = $(this).attr('numeroConvenio');
+    var observacao = $(this).attr('observacao');
 
     $('[name="nome"]').val(nome);
     $('[name="email"]').val(email);
     $('[name="nomeresponsavel"]').val(responsavel);
     $('[name="sexo"]').val(sexo);
+    $('[name="estadocivil"]').val(estadoCivil);
+    $('[name="datanas"]').val(dataNas);
+    $('[name="indicacao"]').val(indicacao);
+    $('[name="cpf"]').val(cpf);    
+    $('[name="celular"]').val(celular);
+    $('[name="cep"]').val(cep);
+    $('[name="telfixo"]').val(telefone);
+    $('[name="teladicio"]').val(telefoneAdicional);
+    $('[name="cep"]').val(cep);
+    $('[name="rua"]').val(rua);
+    $('[name="numero"]').val(numero);
+    $('[name="complemento"]').val(complemento);
+    $('[name="bairro"]').val(bairro);
+    $('[name="cidade"]').val(cidade);
+    $('[name="uf"]').val(uf);
+    $('[name="convenio"]').val(convenio);
+    $('[name="plano"]').val(plano);
+    $('[name="numconvenio"]').val(numeroConvenio);
+    $('[name="dataconvenio"]').val(dataConvenio);    
+    $('[name="obs"]').val(observacao);
+    $('[name="idAtt"]').val(id);
   });
+
+
 
   //função para atualizar o cadastro do paciente
   $('#btnAtt').click(function(){
-      var url = $('#myForm').attr('action');
-			var data = $('#myForm').serialize();
+      var url = $('#myFormEdit').attr('action');
+			var data = $('#myFormEdit').serialize();
 
-    $(function(){addPaciente();
+    $(function(){AtualizaPaciente();
       //function
-      function addPaciente(){
+      function AtualizaPaciente(){
         $.ajax({
           type: 'ajax',
-          method: 'get',
+          method: 'post',
           url: url,
-          data: {id:id},
+          data: data,
           async: false,
           dataType: 'json',
           success: function(response){
-            $('#basicExampleModal').modal('hide');
-            $('#myForm')[0].reset();
+            if(response.success){
+            $('#ModalEdit').modal('hide');
+            $('#ModalEditadoSucess').modal('show');
             mostrarPacientes();
+            }else{
+              alert("erro ao editar o paciente");
+            }
           },
           error: function(){
             alert('Não foi posivel cadastrar');
@@ -380,6 +575,7 @@ $(function(){
 				async: false,
 				dataType: 'json',
 				success: function(data){
+          
 					var html = '';
           var i;
 					for(i=0; i<data.length; i++){
@@ -387,7 +583,7 @@ $(function(){
             $dataC = data[i].dataConvenio.split("-").reverse().join("/");
 						html +=
             '<tr id="headingOne"><td class="paciente-name" width="100%"><button class="btn-paciente" data-toggle="collapse" data-target="#collapse'+i+'" aria-expanded="true" aria-controls="collapse'+i+'">'+data[i].nome+'</button></td>'+
-            '<td><a href="javascript:;" class="btn btn-blue atualizarPaciente" data-toggle="modal" data-target="#basicExampleModal" data="'+data[i].id+'" nome="'+data[i].nome+'" responsavel="'+data[i].nomeResponsavel+'"  email="'+data[i].email+'" sexo="'+data[i].sexo+'" sexo="'+data[i].sexo+'" >Editar</a></td>'	+
+            '<td><a href="javascript:;" class="btn btn-blue atualizarPaciente" data-toggle="modal" data-target="#ModalEdit" dataId="'+data[i].id+'" nome="'+data[i].nome+'" responsavel="'+data[i].nomeResponsavel+'" nascimento="'+$dataN+'" email="'+data[i].email+'" sexo="'+data[i].sexo+'" estadocivil="'+data[i].estadoCivil+'" indicacao="'+data[i].indicacao+'" cpf="'+data[i].cpf+'" celular="'+data[i].celular+'" telefone="'+data[i].telefone+'" teladicio="'+data[i].telefoneAdicional+'" cep="'+data[i].cep+'" rua="'+data[i].rua+'" numero="'+data[i].numero+'" complemento="'+data[i].complemento+'" bairro="'+data[i].bairro+'" cidade="'+data[i].cidade+'" uf="'+data[i].estado+'" convenio="'+data[i].convenio+'" dataConvenio="'+$dataC+'" plano="'+data[i].plano+'" numeroConvenio="'+data[i].numeroConvenio+'" observacao="'+data[i].observacao+'">Editar</a></td>'	+
             '<td><a class="btn btn-orange arquivarPaciente" data-toggle="modal" data-target="#arquivaModal" data="'+data[i].id+'">Arquivar</a> </td>'	+
             '<td><a class="btn btn-danger deletarpaciente" data-toggle="modal" data-target="#deleteModal" data="'+data[i].id+'">Deletar</a></td></tr>'+
             '<tr id="collapse'+i+'" class="collapse" aria-labelledby="heading'+i+'">'+
