@@ -360,219 +360,226 @@
   </div>
 </div>
 <script>
-
 $(function(){
-  $('.close-modal').click(function(){
-    $('.show').modal('hide');
-  });
-  // define a função pra mostrar os pacientes
-  mostrarPacientes();
-
-
-  // ao clicar no btn ele adicona o action
-    $('#openmymodal').click(function(){
-      $('#myForm')[0].reset();
-      $('#myForm').attr('action', '<?php echo base_url() ?>Doctors/addPaciente');
-    });
-
-    $('.close-modal').click(function(){
-      $('#myForm')[0].reset();
-      $('#basicExampleModal').modal('hide');
-      $('#deleteModal').modal('hide');
-    });
-
-    $('.deletarpaciente').click(function(){
-      var idd = $(this).attr('data');
-      $('#btnDelete').attr('data', idd);
-    });
-
-    $('.arquivarPaciente').click(function(){
-      var ida = $(this).attr('data');
-      $('#btnArquiva').attr('data', ida);
-    });
-
-
-  // ao clicar para salvar ele executa a função do ajax
-  $('#btnSave').click(function(){
-      var url = $('#myForm').attr('action');
-			var data = $('#myForm').serialize();
-    $(function(){addPaciente();
-      //function
-      function addPaciente(){
-        $.ajax({
-          type: 'ajax',
-          method: 'post',
-          url: url,
-          data: data,
-          async: false,
-          dataType: 'json',
-          success: function(response){
-            $('#basicExampleModal').modal('hide');
-            $('#myForm')[0].reset();
-            mostrarPacientes();
-          },
-          error: function(xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            alert(err.Message);
-          }
-        });
-      }
-    });
-  });
-
-
-  $('.atualizarPaciente').click(function(){
-    $('#myFormEdit').attr('action', '<?php echo base_url() ?>Doctors/AtualizaPaciente');
-    var id = $(this).attr('dataId');
-    $('#btnAtt').attr('data', id);
-
-    var nome = $(this).attr('nome');
-    var email = $(this).attr('email');
-    var responsavel = $(this).attr('responsavel');
-    var sexo = $(this).attr('sexo');
-    var estadoCivil = $(this).attr('estadoCivil');
-    var indicacao = $(this).attr('indicacao');
-    var dataNas = $(this).attr('nascimento');
-    var cpf = $(this).attr('cpf');
-    var celular = $(this).attr('celular');
-    var telefone = $(this).attr('telefone');
-    var telefoneAdicional = $(this).attr('telefoneAdicional');
-    var cep = $(this).attr('cep');
-    var rua = $(this).attr('rua');
-    var numero = $(this).attr('numero');
-    var complemento = $(this).attr('complemento');
-    var bairro = $(this).attr('bairro');
-    var cidade = $(this).attr('cidade');
-    var uf = $(this).attr('uf');
-    var convenio = $(this).attr('convenio');
-    var dataConvenio = $(this).attr('dataConvenio');
-    var plano = $(this).attr('plano');
-    var numeroConvenio = $(this).attr('numeroConvenio');
-    var observacao = $(this).attr('observacao');
-
-    $('[name="nome"]').val(nome);
-    $('[name="email"]').val(email);
-    $('[name="nomeresponsavel"]').val(responsavel);
-    $('[name="sexo"]').val(sexo);
-    $('[name="estadocivil"]').val(estadoCivil);
-    $('[name="datanas"]').val(dataNas);
-    $('[name="indicacao"]').val(indicacao);
-    $('[name="cpf"]').val(cpf);    
-    $('[name="celular"]').val(celular);
-    $('[name="cep"]').val(cep);
-    $('[name="telfixo"]').val(telefone);
-    $('[name="teladicio"]').val(telefoneAdicional);
-    $('[name="cep"]').val(cep);
-    $('[name="rua"]').val(rua);
-    $('[name="numero"]').val(numero);
-    $('[name="complemento"]').val(complemento);
-    $('[name="bairro"]').val(bairro);
-    $('[name="cidade"]').val(cidade);
-    $('[name="uf"]').val(uf);
-    $('[name="convenio"]').val(convenio);
-    $('[name="plano"]').val(plano);
-    $('[name="numconvenio"]').val(numeroConvenio);
-    $('[name="dataconvenio"]').val(dataConvenio);    
-    $('[name="obs"]').val(observacao);
-    $('[name="idAtt"]').val(id);
-  });
-
-
-
-  //função para atualizar o cadastro do paciente
-  $('#btnAtt').click(function(){
-      var url = $('#myFormEdit').attr('action');
-			var data = $('#myFormEdit').serialize();
-
-    $(function(){AtualizaPaciente();
-      //function
-      function AtualizaPaciente(){
-        $.ajax({
-          type: 'ajax',
-          method: 'post',
-          url: url,
-          data: data,
-          async: false,
-          dataType: 'json',
-          success: function(response){
-            if(response.success){
-            $('#ModalEdit').modal('hide');
-            $('#ModalEditadoSucess').modal('show');
-            mostrarPacientes();
-            }else{
-              alert("erro ao editar o paciente");
-            }
-          },
-          error: function(){
-            alert('Não foi posivel cadastrar');
-          }
-        });
-      }
-    });
-  });
-
-
-
-
-
-
-  //delete-
-  $('#btnDelete').on('click', function(){
-			var id = $(this).attr('data');
-				$.ajax({
-					type: 'ajax',
-					method: 'get',
-					async: false,
-					url: '<?php echo base_url() ?>Doctors/deletePaciente',
-					data:{id:id},
-					dataType: 'json',
-					success: function(response){
-						if(response.success){
-              $('#deleteModal').modal('hide');
-              location.reload();
-							mostrarPacientes();
-              $('#ModalDeleteSucess').modal('show');
-						}else{
-							alert('Não foi posivel deletar');
-						}
-					},
-					error: function(){
-						alert('Error deleting');
-					}
-				});
-		});
-
-
-    $('#btnArquiva').on('click', function(){
-        var id = $(this).attr('data');
+  $base = "<?php echo base_url() ?>";
+  request = new XMLHttpRequest();
+  var path="http://localhost/";
+  request.onreadystatechange=state_change;  
+  request.open("GET", path, true);
+  request.send(null);
+  
+    function state_change()
+{
+if (request.readyState==4)
+  {// 4 = "loaded"
+  if (request.status==200)
+    {// 200 = OK
+    //mostrar pacientes cadastrados
+      mostrarPacientes();
+      $('.close-modal').click(function(){
+      $('.show').modal('hide');
+    });  
+    // ao clicar no btn ele adicona o action
+      $('#openmymodal').click(function(){
+        $('#myForm')[0].reset();
+        $('#myForm').attr('action', ''+$base+'Doctors/addPaciente');
+      });
+  
+      $('.close-modal').click(function(){
+        $('#myForm')[0].reset();
+        $('#basicExampleModal').modal('hide');
+        $('#deleteModal').modal('hide');
+      });
+  
+      $('.deletarpaciente').click(function(){
+        var idd = $(this).attr('data');
+        $('#btnDelete').attr('data', idd);
+      });
+  
+      $('.arquivarPaciente').click(function(){
+        var ida = $(this).attr('data');
+        $('#btnArquiva').attr('data', ida);
+      });
+  
+  
+    // ao clicar para salvar ele executa a função do ajax
+    $('#btnSave').click(function(){
+        var url = $('#myForm').attr('action');
+              var data = $('#myForm').serialize();
+      $(function(){addPaciente();
+        //function
+        function addPaciente(){
           $.ajax({
             type: 'ajax',
-            method: 'get',
-            async: false,
-            url: '<?php echo base_url() ?>Doctors/arquivarPaciente',
-            data:{id:id},
+            method: 'post',
+            url: url,
+            data: data,
+            async: true,
             dataType: 'json',
             success: function(response){
-              if(response){
-                $('#arquivaModal').modal('hide');
-                location.reload();
-                mostrarPacientes();
-                $('#ModalarquivadoSucess').modal('show');
-
+              $('#basicExampleModal').modal('hide');
+              $('#myForm')[0].reset();
+              mostrarPacientes();
+            },
+            error: function(xhr, status, error) {
+              var err = eval("(" + xhr.responseText + ")");
+              alert(err.Message);
+            }
+          });
+        }
+      });
+    });
+  
+  
+    $('.atualizarPaciente').click(function(){
+      $('#myFormEdit').attr('action', ''+$base+'Doctors/AtualizaPaciente');
+      var id = $(this).attr('dataId');
+      $('#btnAtt').attr('data', id);
+  
+      var nome = $(this).attr('nome');
+      var email = $(this).attr('email');
+      var responsavel = $(this).attr('responsavel');
+      var sexo = $(this).attr('sexo');
+      var estadoCivil = $(this).attr('estadoCivil');
+      var indicacao = $(this).attr('indicacao');
+      var dataNas = $(this).attr('nascimento');
+      var cpf = $(this).attr('cpf');
+      var celular = $(this).attr('celular');
+      var telefone = $(this).attr('telefone');
+      var telefoneAdicional = $(this).attr('telefoneAdicional');
+      var cep = $(this).attr('cep');
+      var rua = $(this).attr('rua');
+      var numero = $(this).attr('numero');
+      var complemento = $(this).attr('complemento');
+      var bairro = $(this).attr('bairro');
+      var cidade = $(this).attr('cidade');
+      var uf = $(this).attr('uf');
+      var convenio = $(this).attr('convenio');
+      var dataConvenio = $(this).attr('dataConvenio');
+      var plano = $(this).attr('plano');
+      var numeroConvenio = $(this).attr('numeroConvenio');
+      var observacao = $(this).attr('observacao');
+  
+      $('[name="nome"]').val(nome);
+      $('[name="email"]').val(email);
+      $('[name="nomeresponsavel"]').val(responsavel);
+      $('[name="sexo"]').val(sexo);
+      $('[name="estadocivil"]').val(estadoCivil);
+      $('[name="datanas"]').val(dataNas);
+      $('[name="indicacao"]').val(indicacao);
+      $('[name="cpf"]').val(cpf);    
+      $('[name="celular"]').val(celular);
+      $('[name="cep"]').val(cep);
+      $('[name="telfixo"]').val(telefone);
+      $('[name="teladicio"]').val(telefoneAdicional);
+      $('[name="cep"]').val(cep);
+      $('[name="rua"]').val(rua);
+      $('[name="numero"]').val(numero);
+      $('[name="complemento"]').val(complemento);
+      $('[name="bairro"]').val(bairro);
+      $('[name="cidade"]').val(cidade);
+      $('[name="uf"]').val(uf);
+      $('[name="convenio"]').val(convenio);
+      $('[name="plano"]').val(plano);
+      $('[name="numconvenio"]').val(numeroConvenio);
+      $('[name="dataconvenio"]').val(dataConvenio);    
+      $('[name="obs"]').val(observacao);
+      $('[name="idAtt"]').val(id);
+    });
+  
+  
+  
+    //função para atualizar o cadastro do paciente
+    $('#btnAtt').click(function(){
+        var url = $('#myFormEdit').attr('action');
+              var data = $('#myFormEdit').serialize();
+  
+      $(function(){AtualizaPaciente();
+        //function
+        function AtualizaPaciente(){
+          $.ajax({
+            type: 'ajax',
+            method: 'post',
+            url: url,
+            data: data,
+            async: true,
+            dataType: 'json',
+            success: function(response){
+              if(response.success){
+              $('#ModalEdit').modal('hide');
+              $('#ModalEditadoSucess').modal('show');
+              mostrarPacientes();
+              }else{
+                alert("erro ao editar o paciente");
               }
             },
             error: function(){
-              alert('Erro');
+              alert('Não foi posivel cadastrar');
             }
           });
+        }
       });
-
-  //mostrar pacientes cadastrados
-  function mostrarPacientes(){
-			$.ajax({
-				type: 'ajax',
+    });
+  
+  
+  
+  
+  
+  
+    //delete-
+    $('#btnDelete').on('click', function(){
+              var id = $(this).attr('data');
+                  $.ajax({
+                      type: 'ajax',
+                      method: 'get',
+                      async: true,
+                      url: ''+$base+'Doctors/deletePaciente',
+                      data:{id:id},
+                      dataType: 'json',
+                      success: function(response){
+                          if(response.success){
+                $('#deleteModal').modal('hide');
+                location.reload();
+                              mostrarPacientes();
+                $('#ModalDeleteSucess').modal('show');
+                          }else{
+                              alert('Não foi posivel deletar');
+                          }
+                      },
+                      error: function(){
+                          alert('Error deleting');
+                      }
+                  });
+          });
+  
+  
+      $('#btnArquiva').on('click', function(){
+          var id = $(this).attr('data');
+            $.ajax({
+              type: 'ajax',
+              method: 'get',
+              async: true,
+              url: ''+$base+'Doctors/arquivarPaciente',
+              data:{id:id},
+              dataType: 'json',
+              success: function(response){
+                if(response){
+                  $('#arquivaModal').modal('hide');
+                  location.reload();
+                  mostrarPacientes();
+                  $('#ModalarquivadoSucess').modal('show');
+  
+                }
+              },
+              error: function(){
+                alert('Erro');
+              }
+            });
+        });
+        function mostrarPacientes(){
+			$.get({
 				url: '<?php echo base_url() ?>Doctors/mostrarPacientes',
-				async: false,
+				async: true,
 				dataType: 'json',
 				success: function(data){
           
@@ -599,15 +606,25 @@ $(function(){
             '<tr><td colspan="50" width="100%">'+data[i].observacao+'</td></tr>'+
             '</table></td></tr>';
             		}
-					$('#showdata').html(html);
+          $('#showdata').html(html);
+          alert('Todos Pacientes Carregados');
 				},
 				error: function(){
           var html = '';
           html += '<strong class="text-center">Nenhum paciente cadastrado</strong>'
           $('#showdata').html(html);
+          alert('erro');
 				}
 			});
     }
-  });
+  }
+  else
+    {
+    alert("Problem retrieving XML data");
+    }
+  }
+}
+
+});
 
 </script>

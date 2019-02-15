@@ -22,7 +22,6 @@
     <link href="<?= base_url('assets/css/mdb.css') ?>" rel="stylesheet">
     <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
 
-    <link rel="stylesheet" href="<?= base_url('assets/css/alertify.css')?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/themes/bootstrap.css')?>">
 
 <!-- Font Awesome -->
@@ -34,10 +33,7 @@
 <!-- Bootstrap core CSS -->
 <link href=" <?= base_url('../../dist/css/bootstrap.min.css')?>" rel="stylesheet)">
 
-<!-- Custom styles for this template -->
-<link href="dashboard.css" rel="stylesheet">
-<script src="<?= base_url('assets/js/alertify.js')?>"></script>
+
 <script type="text/javascript" src="<?= base_url('assets/js/jquery-3.3.1.min.js') ?>"></script>
-<script type="text/javascript" src="<?= base_url('assets/js/notification.js')?>"></script>
 </head>
 <body>
