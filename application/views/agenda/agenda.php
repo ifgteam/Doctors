@@ -19,53 +19,49 @@
   <!-- Text -->
   <p class="card-text">
   
-  <form class="text-center border border-light p-5">
+  <form class=" border border-light p-5">
 
-    <p class="h4 mb-4">Agende agora</p>
+    <p style="margin-left:25%" class="h4 mb-4">Agende agora</p>
 
     <!-- Subject -->
-    <select id="especialista" class="browser-default custom-select mb-4">
-        <option value="" selected>Escolha o especialista</option>
-        <?php foreach ($especialistas as $especialista) {
-           echo '<option value="'.$especialista->idMedico.'">'.$especialista->nome.'</option>';
+    <select id = "especialidade" class="browser-default custom-select mb-4" name="especialidade">
+        <option value="" selected>Escolha a especialidade</option>
+        <?php foreach($especialidades as $especialidade){
+          echo '<option value="'.$especialidade->idEsp.'">'.$especialidade->especialidade.'</option>';
         } ?>
     </select>
-    <select class="browser-default custom-select mb-4">
-        <option value="" selected>Data</option>
-        <option value="1">Daniel</option>
-        <option value="2">Ana</option>
-        <option value="3">Guilherme</option>
-        <option value="4">Ivaldo</option>
-    </select>
-    <select class="browser-default custom-select mb-4">
-        <option value="" selected>Horarios disponiveis</option>
-        <option value="1">Daniel</option>
-        <option value="2">Ana</option>
-        <option value="3">Guilherme</option>
-        <option value="4">Ivaldo</option>
-    </select>
-    <select class="browser-default custom-select mb-4">
-        <option value="" selected>Selecione o paciente</option>
-        <option value="1">Daniel</option>
-        <option value="2">Ana</option>
-        <option value="3">Guilherme</option>
-        <option value="4">Ivaldo</option>
-    </select>
+        <script>
+         debugger;
+            $(document).ready(function() {
+        $('select[name="especialidade"]').on('change', function() {
+            var idEsp = $(this).val();
+            console.log(idEsp);
+            if(idEsp) {
+                $.ajax({
+                    url:'/Doctors/Doctors/myformAjax/'+idEsp,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="especialista"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="especialista"]').append('<option value="'+ value.idMedico +'">'+ value.nome +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('select[name="especialista"]').empty();
+            }
+        });
 
-
-    <!-- Message -->
-    <div class="form-group">
-        <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="Observação"></textarea>
-    </div>
-
-    <!-- Copy -->
-    <div class="custom-control custom-checkbox mb-4">
-        <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
-        <label class="custom-control-label" for="defaultContactFormCopy">Agendamento recorrente</label>
-    </div>
+      });
+      
+        </script>
+    <select  name="especialista" id="especialista" class="browser-default custom-select mb-4">
+      <option value="" selected>Escolha o especialista</option>
+    </select>
 
     <!-- Send button -->
-    <button class="btn btn-info btn-block" type="submit">Agendar</button>
+    <button class="btn btn-info btn-block" type="submit">Prosseguir</button>
 
 </form>
   </p>
@@ -74,12 +70,15 @@
 </div>
 
 </div>
-<!-- Card -->
-  
+<!-- Card --> 
   </div>
+
+
   <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
     <select class="browser-default custom-select mb-4">
         <option value="" selected>Selecione o especialista</option>
+        <option value="" >Guilherme</option>
+        <option value="" >Daniel</option>
     </select>
     <div class="card">
       <h5 class="card-header h5">Paciêntes a chegar</h5>
@@ -90,9 +89,6 @@
         <button type="button" class="btn btn-primary">
               Ana Lucia <span class="badge badge-danger ml-2">13:00 à 13:30</span>
         </button>
-        <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">12:30 à 13:00</span>
-        </button>
 
         </div>
     </div>
@@ -100,13 +96,7 @@
       <h5 class="card-header h5">Em atendimento</h5>
         <div class="card-body">
         <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">30/01 12:30 à 13:00</span>
-        </button>
-        <button type="button" class="btn btn-primary">
-              Ana Lucia <span class="badge badge-danger ml-2">13:00 à 13:30</span>
-        </button>
-        <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">12:30 à 13:00</span>
+              Amilton <span class="badge badge-danger ml-2">30/01 12:30 à 13:00</span>
         </button>
 
         </div>
@@ -115,7 +105,7 @@
       <h5 class="card-header h5">Atendimento finalizado</h5>
         <div class="card-body">
         <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">30/01 12:30 à 13:00</span>
+              Rodrigo <span class="badge badge-danger ml-2">30/01 12:30 à 13:00</span>
         </button>
 
         </div>
@@ -124,13 +114,13 @@
       <h5 class="card-header h5">Todos agendamentos</h5>
         <div class="card-body">
         <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">30/01 12:30 à 13:00</span>
+              Fabio <span class="badge badge-danger ml-2">23/01 12:30 à 13:00</span>
         </button>
         <button type="button" class="btn btn-primary">
-              Ana Lucia <span class="badge badge-danger ml-2">13:00 à 13:30</span>
+              Andre <span class="badge badge-danger ml-2">24/01 13:00 à 13:30</span>
         </button>
         <button type="button" class="btn btn-primary">
-              Guilherme Santana <span class="badge badge-danger ml-2">12:30 à 13:00</span>
+              Daniel <span class="badge badge-danger ml-2">26/01 12:30 à 13:00</span>
         </button>
 
         </div>
@@ -138,3 +128,11 @@
     
   </div>
 <div>
+
+//calendario
+<script>
+        // Initialization
+$('#my-element').datepicker([options])
+// Access instance of plugin
+$('#my-element').data('datepicker')
+</script>

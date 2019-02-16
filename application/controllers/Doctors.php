@@ -8,15 +8,28 @@ class Doctors extends CI_Controller {
 		$this->load->model('PacienteModel', 'm');
 	}
 
-    public function index(){
-        $this->load->helper('url');
-        $this->load->view('component/cabecalho');
-        $this->load->model('PacienteModel','especialistas');
-        $especialistas['especialistas'] = $this->especialistas->get_especialista();
-        $this->load->view('agenda/agenda',$especialistas);
-        $this->load->view('component/navbar');
-        $this->load->view('component/rodape3');
-    }
+  function index($indice=null){
+    if($indice==1){
+        $data['msg'] = "Incluido com sucesso" ;      
+       $this->load->view('includes/scs_msg',$data);
+       }else if($indice==2){
+       $data['msg'] = "Incluido com sucesso";
+       $this->load->view('includes/scs_msg',$data);
+       } 
+    $this->load->helper('url');
+    $this->load->view('component/cabecalho');
+    $this->load->model('AgendamentoModel', 'especialidades');
+    $dados['especialidades'] = $this->especialidades->buscaEspecialidade();
+    $dados2['pacientes'] = $this->especialidades->buscaEspecialidade();
+
+    $this->load->view('agenda/agenda2',$dados,$dados2);
+
+
+    $this->load->view('component/navbar');
+    $this->load->view('component/rodape3');
+
+
+}
 
     public function pacientes(){
         $this->load->helper('url');
@@ -32,21 +45,11 @@ class Doctors extends CI_Controller {
         $this->load->model('FuncionariosModel','funcionarios');
         $this->funcionarios->cadastrar();
     }
-
-    public function prontuario(){
-
-    }
-    function buscarData(){
-        $this->db->where('agenda_medico', $this->input->post('especialista'));
-        echo $this->db->get("data")->row('data');
-
-    }
     public function mostrarPacientes(){
         $this->load->model('PacienteModel','pacientes');
         $result = $this->pacientes->mostrarPacientes();
         echo json_encode($result);
     }
-
 
     public function addPaciente(){
 		$result = $this->m->addPacientes();
@@ -85,5 +88,83 @@ class Doctors extends CI_Controller {
 			$msg['success'] = true;
 		}
 		echo json_encode($msg);
-	}
+  }
+  
+  function cadastrarDisp(){
+    $this->load->model('AgendamentoModel','agenda');
+   if ($this->agenda->cadastrar_agenda()){
+       redirect('Doctors/index/1');
+   }else{
+    redirect('Doctors/index/2');
+   }
+
+}
+function cadastrarAgenda(){
+    $this->load->model('AgendamentoModel','agenda');
+   if ($this->agenda->cadastrar_agendamento()){
+       redirect('Doctors/index/1');
+   }else{
+    redirect('Doctors/index/2');
+   }
+
+}
+function cadastrarPacientes(){
+    $this->load->model('PacienteModel','paciente');
+   if ($this->paciente->cadastrar_paciente()){
+       redirect('Doctors/index/1');
+   }else{
+    redirect('Doctors/index/2');
+   }
+
+}
+
+function buscarData(){
+    $this->db->where('agenda_medico', $this->input->post('especialidade'));
+    echo $this->db->get("data")->row('data');
+
+}
+public function buscarEspecialista(){
+    $this->db->where('agenda_medico', $this->input->post('especialidade'));
+    return $this->especialidades->teste();
+}
+
+
+public function incluirDispo(){
+    $this->load->helper('url');
+    $this->load->view('component/cabecalho');
+    $this->load->view('component/navbar'); 
+    $this->load->view('agenda/cadastrarHorario'); 
+    $this->load->view('component/rodape3');
+
+
+}
+public function myformAjax($idEsp) { 
+    $result = $this->db->where("idEspecialidade",$idEsp)->get("medico")->result();
+    echo json_encode($result);
+}
+public function myformAjax2($idEspa) { 
+    $result = $this->db->where("idMedico",$idEspa)->get("agenda_medico")->result();
+    echo json_encode($result);
+}
+public function myformAjax3($data2) { 
+    $result = $this->db->where("data",$data2)->get("agenda_medico")->result();
+    echo json_encode($result);
+}
+public function myformAjax4() { 
+    $result = $this->db->get("pacientes")->result();
+    echo json_encode($result);
+}
+  function myformAjax5($idEspa){
+    $this->db->select('*');    
+    $this->db->from('agenda');
+    $this->db->join('pacientes', 'agenda.paciente = pacientes.id');
+    $result = $this->db->where("especialista",$idEspa)->get()->result();
+    echo json_encode($result);
+
+}
+public function myformAjax6() { 
+    $result = $this->db->get("medico")->result();
+    echo json_encode($result);
+}
+
 }

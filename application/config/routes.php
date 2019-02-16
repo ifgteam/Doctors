@@ -54,3 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['funcionarios/ (:num)'] =" funcionarios/index/$1";
 $route['pacientes'] = "Doctors/pacientes";
+$route['myform'] = 'Doctors';
+$route['myform/ajax/(:any)'] = 'Doctors/myformAjax/$1';

@@ -375,12 +375,13 @@ if (request.readyState==4)
   if (request.status==200)
     {// 200 = OK
     //mostrar pacientes cadastrados
-      mostrarPacientes();
+    mostrarPacientes();
+
       $('.close-modal').click(function(){
       $('.show').modal('hide');
     });  
     // ao clicar no btn ele adicona o action
-      $('#openmymodal').click(function(){
+      $('body').on('click', '#openmymodal', function(){
         $('#myForm')[0].reset();
         $('#myForm').attr('action', ''+$base+'Doctors/addPaciente');
       });
@@ -390,17 +391,75 @@ if (request.readyState==4)
         $('#basicExampleModal').modal('hide');
         $('#deleteModal').modal('hide');
       });
-  
-      $('.deletarpaciente').click(function(){
+
+      $('body').on('click', '.deletarpaciente', function(){
         var idd = $(this).attr('data');
         $('#btnDelete').attr('data', idd);
       });
-  
-      $('.arquivarPaciente').click(function(){
+
+      $('body').on('click', '.arquivarPaciente', function(){
         var ida = $(this).attr('data');
         $('#btnArquiva').attr('data', ida);
       });
-  
+
+      $('body').on('click', '.atualizarPaciente', function(){
+        var idt = $(this).attr('data');
+        $('#btnDelete').attr('data', idt);
+        $('#myFormEdit').attr('action', ''+$base+'Doctors/AtualizaPaciente');
+        var id = $(this).attr('dataId');
+        $('#btnAtt').attr('data', id);
+    
+        var nome = $(this).attr('nome');
+        var email = $(this).attr('email');
+        var responsavel = $(this).attr('responsavel');
+        var sexo = $(this).attr('sexo');
+        var estadoCivil = $(this).attr('estadoCivil');
+        var indicacao = $(this).attr('indicacao');
+        var dataNas = $(this).attr('nascimento');
+        var cpf = $(this).attr('cpf');
+        var celular = $(this).attr('celular');
+        var telefone = $(this).attr('telefone');
+        var telefoneAdicional = $(this).attr('telefoneAdicional');
+        var cep = $(this).attr('cep');
+        var rua = $(this).attr('rua');
+        var numero = $(this).attr('numero');
+        var complemento = $(this).attr('complemento');
+        var bairro = $(this).attr('bairro');
+        var cidade = $(this).attr('cidade');
+        var uf = $(this).attr('uf');
+        var convenio = $(this).attr('convenio');
+        var dataConvenio = $(this).attr('dataConvenio');
+        var plano = $(this).attr('plano');
+        var numeroConvenio = $(this).attr('numeroConvenio');
+        var observacao = $(this).attr('observacao');
+    
+        $('[name="nome"]').val(nome);
+        $('[name="email"]').val(email);
+        $('[name="nomeresponsavel"]').val(responsavel);
+        $('[name="sexo"]').val(sexo);
+        $('[name="estadocivil"]').val(estadoCivil);
+        $('[name="datanas"]').val(dataNas);
+        $('[name="indicacao"]').val(indicacao);
+        $('[name="cpf"]').val(cpf);    
+        $('[name="celular"]').val(celular);
+        $('[name="cep"]').val(cep);
+        $('[name="telfixo"]').val(telefone);
+        $('[name="teladicio"]').val(telefoneAdicional);
+        $('[name="cep"]').val(cep);
+        $('[name="rua"]').val(rua);
+        $('[name="numero"]').val(numero);
+        $('[name="complemento"]').val(complemento);
+        $('[name="bairro"]').val(bairro);
+        $('[name="cidade"]').val(cidade);
+        $('[name="uf"]').val(uf);
+        $('[name="convenio"]').val(convenio);
+        $('[name="plano"]').val(plano);
+        $('[name="numconvenio"]').val(numeroConvenio);
+        $('[name="dataconvenio"]').val(dataConvenio);    
+        $('[name="obs"]').val(observacao);
+        $('[name="idAtt"]').val(id);
+        });
+
   
     // ao clicar para salvar ele executa a função do ajax
     $('#btnSave').click(function(){
@@ -428,66 +487,7 @@ if (request.readyState==4)
           });
         }
       });
-    });
-  
-  
-    $('.atualizarPaciente').click(function(){
-      $('#myFormEdit').attr('action', ''+$base+'Doctors/AtualizaPaciente');
-      var id = $(this).attr('dataId');
-      $('#btnAtt').attr('data', id);
-  
-      var nome = $(this).attr('nome');
-      var email = $(this).attr('email');
-      var responsavel = $(this).attr('responsavel');
-      var sexo = $(this).attr('sexo');
-      var estadoCivil = $(this).attr('estadoCivil');
-      var indicacao = $(this).attr('indicacao');
-      var dataNas = $(this).attr('nascimento');
-      var cpf = $(this).attr('cpf');
-      var celular = $(this).attr('celular');
-      var telefone = $(this).attr('telefone');
-      var telefoneAdicional = $(this).attr('telefoneAdicional');
-      var cep = $(this).attr('cep');
-      var rua = $(this).attr('rua');
-      var numero = $(this).attr('numero');
-      var complemento = $(this).attr('complemento');
-      var bairro = $(this).attr('bairro');
-      var cidade = $(this).attr('cidade');
-      var uf = $(this).attr('uf');
-      var convenio = $(this).attr('convenio');
-      var dataConvenio = $(this).attr('dataConvenio');
-      var plano = $(this).attr('plano');
-      var numeroConvenio = $(this).attr('numeroConvenio');
-      var observacao = $(this).attr('observacao');
-  
-      $('[name="nome"]').val(nome);
-      $('[name="email"]').val(email);
-      $('[name="nomeresponsavel"]').val(responsavel);
-      $('[name="sexo"]').val(sexo);
-      $('[name="estadocivil"]').val(estadoCivil);
-      $('[name="datanas"]').val(dataNas);
-      $('[name="indicacao"]').val(indicacao);
-      $('[name="cpf"]').val(cpf);    
-      $('[name="celular"]').val(celular);
-      $('[name="cep"]').val(cep);
-      $('[name="telfixo"]').val(telefone);
-      $('[name="teladicio"]').val(telefoneAdicional);
-      $('[name="cep"]').val(cep);
-      $('[name="rua"]').val(rua);
-      $('[name="numero"]').val(numero);
-      $('[name="complemento"]').val(complemento);
-      $('[name="bairro"]').val(bairro);
-      $('[name="cidade"]').val(cidade);
-      $('[name="uf"]').val(uf);
-      $('[name="convenio"]').val(convenio);
-      $('[name="plano"]').val(plano);
-      $('[name="numconvenio"]').val(numeroConvenio);
-      $('[name="dataconvenio"]').val(dataConvenio);    
-      $('[name="obs"]').val(observacao);
-      $('[name="idAtt"]').val(id);
-    });
-  
-  
+    });  
   
     //função para atualizar o cadastro do paciente
     $('#btnAtt').click(function(){
@@ -576,11 +576,13 @@ if (request.readyState==4)
               }
             });
         });
-        function mostrarPacientes(){
+
+      
+      function mostrarPacientes(){
 			$.get({
 				url: '<?php echo base_url() ?>Doctors/mostrarPacientes',
-				async: true,
-				dataType: 'json',
+        async: true,
+        dataType: 'json',
 				success: function(data){
           
 					var html = '';
@@ -590,7 +592,7 @@ if (request.readyState==4)
             $dataC = data[i].dataConvenio.split("-").reverse().join("/");
 						html +=
             '<tr id="headingOne"><td class="paciente-name" width="100%"><button class="btn-paciente" data-toggle="collapse" data-target="#collapse'+i+'" aria-expanded="true" aria-controls="collapse'+i+'">'+data[i].nome+'</button></td>'+
-            '<td><a href="javascript:;" class="btn btn-blue atualizarPaciente" data-toggle="modal" data-target="#ModalEdit" dataId="'+data[i].id+'" nome="'+data[i].nome+'" responsavel="'+data[i].nomeResponsavel+'" nascimento="'+$dataN+'" email="'+data[i].email+'" sexo="'+data[i].sexo+'" estadocivil="'+data[i].estadoCivil+'" indicacao="'+data[i].indicacao+'" cpf="'+data[i].cpf+'" celular="'+data[i].celular+'" telefone="'+data[i].telefone+'" teladicio="'+data[i].telefoneAdicional+'" cep="'+data[i].cep+'" rua="'+data[i].rua+'" numero="'+data[i].numero+'" complemento="'+data[i].complemento+'" bairro="'+data[i].bairro+'" cidade="'+data[i].cidade+'" uf="'+data[i].estado+'" convenio="'+data[i].convenio+'" dataConvenio="'+$dataC+'" plano="'+data[i].plano+'" numeroConvenio="'+data[i].numeroConvenio+'" observacao="'+data[i].observacao+'">Editar</a></td>'	+
+            '<td><a class="btn btn-blue atualizarPaciente" data-toggle="modal" data-target="#ModalEdit" dataId="'+data[i].id+'" nome="'+data[i].nome+'" responsavel="'+data[i].nomeResponsavel+'" nascimento="'+$dataN+'" email="'+data[i].email+'" sexo="'+data[i].sexo+'" estadocivil="'+data[i].estadoCivil+'" indicacao="'+data[i].indicacao+'" cpf="'+data[i].cpf+'" celular="'+data[i].celular+'" telefone="'+data[i].telefone+'" teladicio="'+data[i].telefoneAdicional+'" cep="'+data[i].cep+'" rua="'+data[i].rua+'" numero="'+data[i].numero+'" complemento="'+data[i].complemento+'" bairro="'+data[i].bairro+'" cidade="'+data[i].cidade+'" uf="'+data[i].estado+'" convenio="'+data[i].convenio+'" dataConvenio="'+$dataC+'" plano="'+data[i].plano+'" numeroConvenio="'+data[i].numeroConvenio+'" observacao="'+data[i].observacao+'">Editar</a></td>'	+
             '<td><a class="btn btn-orange arquivarPaciente" data-toggle="modal" data-target="#arquivaModal" data="'+data[i].id+'">Arquivar</a> </td>'	+
             '<td><a class="btn btn-danger deletarpaciente" data-toggle="modal" data-target="#deleteModal" data="'+data[i].id+'">Deletar</a></td></tr>'+
             '<tr id="collapse'+i+'" class="collapse" aria-labelledby="heading'+i+'">'+
@@ -607,24 +609,21 @@ if (request.readyState==4)
             '</table></td></tr>';
             		}
           $('#showdata').html(html);
-          alert('Todos Pacientes Carregados');
+        
 				},
-				error: function(){
-          var html = '';
-          html += '<strong class="text-center">Nenhum paciente cadastrado</strong>'
-          $('#showdata').html(html);
-          alert('erro');
-				}
-			});
-    }
+          error: function(){
+            var html = '';
+            html += '<strong class="text-center">Nenhum paciente cadastrado</strong>'
+            $('#showdata').html(html);
+            alert('erro');
+          }
+      });
+      }
   }
-  else
-    {
+  else{
     alert("Problem retrieving XML data");
     }
   }
 }
-
-});
-
+  });
 </script>
