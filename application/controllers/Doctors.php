@@ -9,7 +9,10 @@ class Doctors extends CI_Controller {
 	}
 
   function index($indice=null){
-    if($indice==1){
+    $tmp = $this->session->userdata('usuario');
+    $acesso = $tmp['acesso'];
+    if($acesso == 1 || 2 || 3){
+    if($indice==3){
         $data['msg'] = "Incluido com sucesso" ;      
        $this->load->view('includes/scs_msg',$data);
        }else if($indice==2){
@@ -21,23 +24,65 @@ class Doctors extends CI_Controller {
     $this->load->model('AgendamentoModel', 'especialidades');
     $dados['especialidades'] = $this->especialidades->buscaEspecialidade();
     $dados2['pacientes'] = $this->especialidades->buscaEspecialidade();
-
+    if($acesso == 3){   
     $this->load->view('agenda/agenda2',$dados,$dados2);
 
-
+    }else{
+    $this->load->view('errors/errodeacesso');    
+    }    
     $this->load->view('component/navbar');
+    
     $this->load->view('component/rodape3');
+    }else{
+        redirect('Doctors/login');
+    }
 
 
 }
-
-    public function pacientes(){
+    public function register(){
+        $tmp = $this->session->userdata('usuario');
+        $acesso = $tmp['acesso'];
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
         $this->load->view('component/navbar');
+        $this->load->model('RegistroModel','registro');
+        $this->registro->register();
+        if($acesso == 1){
+        $this->load->view('registrousuarios/formregister',null);
+        }else{
+        $this->load->view('errors/errodeacesso');    
+            }   
+        $this->load->view('component/rodape3');
+    }
+
+    public function login(){ //função para usuario logar no sistema
+        $this->load->helper('url');
+        $this->load->view('component/cabecalho'); 
+        $this->load->model('LoginModel','login');
+        $this->login->validate();
+        $this->load->view('registrousuarios/formlogin', null);
+        $this->load->view('component/rodape3');
+    }
+
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect('Doctors/login');
+    }
+
+    public function pacientes(){
+        $tmp = $this->session->userdata('usuario');
+        $acesso = $tmp['acesso'];
+        $this->load->helper('url');
+        $this->load->view('component/cabecalho');
+        $this->load->view('component/navbar');
+        if($acesso == 2){
         $this->load->model('PacienteModel','pacientes');
         $dados['pacientes'] = $this->pacientes->get_pacientes();
         $this->load->view('pacientes/pacientesList',$dados);
+        }
+        else{
+        $this->load->view('errors/errodeacesso');
+            }
         $this->load->view('component/rodape3');
     }
 

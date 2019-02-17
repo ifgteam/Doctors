@@ -25,8 +25,11 @@
                             <a class="nav-link waves-effect white-text" href="<?=base_url()?>pacientes" target="_parent">PACIÊNTES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>Doctors/" target="_parent">ADMINISTRAÇÃO</a>
-                        </li>          
+                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>register" target="_parent">ADMINISTRAÇÃO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect white-text" href="<?=base_url()?>Doctors/logout" target="_parent">LOGOUT</a>
+                        </li>             
                     </ul>
 
                     <!-- Right -->
