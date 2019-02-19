@@ -1,23 +1,25 @@
 ﻿-- phpMyAdmin SQL Dump
--- version 4.1.4
--- http://www.phpmyadmin.net
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 16-Fev-2019 às 17:43
--- Versão do servidor: 5.6.15-log
--- PHP Version: 5.5.8
+-- Host: localhost
+-- Generation Time: 19-Fev-2019 às 13:01
+-- Versão do servidor: 10.3.12-MariaDB
+-- PHP Version: 7.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `lifeclin`
+-- Database: `id8735486_lifeclin`
 --
 
 -- --------------------------------------------------------
@@ -26,19 +28,14 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `agenda`
 --
 
-CREATE TABLE IF NOT EXISTS `agenda` (
+CREATE TABLE `agenda` (
   `idAgenda` int(11) NOT NULL,
   `especialidade` int(11) NOT NULL,
   `especialista` int(11) NOT NULL,
   `data` date NOT NULL,
   `hora` time NOT NULL,
   `paciente` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  PRIMARY KEY (`idAgenda`),
-  KEY `especialidade` (`especialidade`),
-  KEY `especialista` (`especialista`),
-  KEY `paciente` (`paciente`),
-  KEY `status` (`status`)
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -46,13 +43,10 @@ CREATE TABLE IF NOT EXISTS `agenda` (
 --
 
 INSERT INTO `agenda` (`idAgenda`, `especialidade`, `especialista`, `data`, `hora`, `paciente`, `status`) VALUES
-(0, 1, 3, '2018-01-13', '07:00:00', 2, 1),
-(2, 1, 3, '2019-02-05', '15:00:00', 1, 1),
-(3, 1, 3, '2019-02-27', '09:00:00', 1, 1),
-(4, 1, 3, '2019-02-26', '08:30:00', 6, 1),
-(5, 1, 3, '2019-02-12', '08:30:00', 4, 1),
-(6, 1, 3, '2018-01-15', '14:30:00', 1, 1),
-(7, 1, 3, '2018-01-18', '14:30:00', 6, 1);
+(9, 1, 3, '2018-01-13', '07:00:00', 2, 1),
+(10, 1, 3, '2019-02-04', '11:00:00', 2, 1),
+(11, 1, 3, '2018-01-13', '07:00:00', 7, 1),
+(12, 1, 3, '2019-02-28', '15:00:00', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +54,7 @@ INSERT INTO `agenda` (`idAgenda`, `especialidade`, `especialista`, `data`, `hora
 -- Estrutura da tabela `agenda_medico`
 --
 
-CREATE TABLE IF NOT EXISTS `agenda_medico` (
+CREATE TABLE `agenda_medico` (
   `idMedico` int(11) NOT NULL,
   `idEsp` int(11) DEFAULT NULL,
   `data` date DEFAULT NULL,
@@ -97,9 +91,7 @@ CREATE TABLE IF NOT EXISTS `agenda_medico` (
   `hora[27]` time DEFAULT NULL,
   `hora[28]` time DEFAULT NULL,
   `hora[29]` time DEFAULT NULL,
-  `hora[30]` time DEFAULT NULL,
-  KEY `idMedico` (`idMedico`),
-  KEY `idEsp` (`idEsp`)
+  `hora[30]` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -274,11 +266,9 @@ INSERT INTO `agenda_medico` (`idMedico`, `idEsp`, `data`, `inicio`, `inicio_almo
 -- Estrutura da tabela `especialidades`
 --
 
-CREATE TABLE IF NOT EXISTS `especialidades` (
+CREATE TABLE `especialidades` (
   `idEsp` int(11) NOT NULL,
-  `especialidade` varchar(20) NOT NULL,
-  PRIMARY KEY (`idEsp`),
-  KEY `idEspecialidade` (`idEsp`)
+  `especialidade` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -292,147 +282,6 @@ INSERT INTO `especialidades` (`idEsp`, `especialidade`) VALUES
 (4, 'Fisioterapia'),
 (5, 'Neuropsicologia'),
 (6, 'Psicopedagogia');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `medico`
---
-
-CREATE TABLE IF NOT EXISTS `medico` (
-  `idMedico` int(11) NOT NULL,
-  `nome` varchar(20) NOT NULL,
-  `numeroProfissional` varchar(20) NOT NULL,
-  `dataNascimento` date NOT NULL,
-  `idEspecialidade` int(20) NOT NULL,
-  PRIMARY KEY (`idMedico`),
-  KEY `idMedico` (`idMedico`),
-  KEY `idEspecialidade` (`idEspecialidade`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `medico`
---
-
-INSERT INTO `medico` (`idMedico`, `nome`, `numeroProfissional`, `dataNascimento`, `idEspecialidade`) VALUES
-(3, 'Daniel', '4234242', '2019-02-13', 1),
-(4, 'Cluadia', '4234242', '2019-02-06', 6),
-(5, 'Ana Maria', '432423', '2019-02-04', 3),
-(6, 'Paula', '43224', '2019-02-12', 4),
-(7, 'Sergio', '4234324', '2019-02-06', 4),
-(8, 'Gabriela', '433543', '2019-02-04', 2),
-(9, 'Alan', '3213123', '2019-02-19', 5);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `pacientes`
---
-
-CREATE TABLE IF NOT EXISTS `pacientes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(20) NOT NULL,
-  `nomeResponsavel` varchar(20) NOT NULL,
-  `sexo` varchar(10) NOT NULL,
-  `dataNascimento` date NOT NULL,
-  `estadoCivil` varchar(12) NOT NULL,
-  `indicacao` varchar(20) NOT NULL,
-  `cpf` varchar(13) NOT NULL,
-  `celular` varchar(14) NOT NULL,
-  `telefone` varchar(14) NOT NULL,
-  `telefoneAdicional` varchar(14) NOT NULL,
-  `email` varchar(25) NOT NULL,
-  `cep` varchar(10) NOT NULL,
-  `rua` varchar(100) NOT NULL,
-  `numero` int(7) NOT NULL,
-  `complemento` varchar(20) NOT NULL,
-  `bairro` varchar(20) NOT NULL,
-  `cidade` varchar(20) NOT NULL,
-  `estado` varchar(2) NOT NULL,
-  `convenio` varchar(20) NOT NULL,
-  `plano` varchar(20) NOT NULL,
-  `numeroConvenio` int(30) NOT NULL,
-  `dataConvenio` date NOT NULL,
-  `observacao` varchar(20) NOT NULL,
-  `status` int(2) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
---
--- Extraindo dados da tabela `pacientes`
---
-
-INSERT INTO `pacientes` (`id`, `nome`, `nomeResponsavel`, `sexo`, `dataNascimento`, `estadoCivil`, `indicacao`, `cpf`, `celular`, `telefone`, `telefoneAdicional`, `email`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `convenio`, `plano`, `numeroConvenio`, `dataConvenio`, `observacao`, `status`) VALUES
-(2, 'Guilherme', 'Ana', 'Masculino', '2000-09-09', 'Namorando', 'Ana', '48977851890', '11997948992', '1124077895', '', 'santanaguisantos@gmail.co', '0713565', 'Rua zona', 234, 'Sesi', 'Jd.Adriana', 'Guarulhos', 'sp', 'Metrus', 'plano', 3432423, '2019-01-23', 'MI LINDA', 1),
-(7, 'Jeff', 'Thomas', 'Thomas', '2019-02-01', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', '07077065', 'Rua Geraldo Augusto da Silva', 666, 'alo', 'Parque Continental I', 'Guarulhos', 'SP', 'Thomas', 'Thomas', 0, '2019-02-28', 'dsadsada', 1);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `prontuario`
---
-
-CREATE TABLE IF NOT EXISTS `prontuario` (
-  `idPaciente` int(11) NOT NULL,
-  `anotacoes` varchar(250) NOT NULL,
-  `problemas` varchar(250) NOT NULL,
-  `resumo` varchar(250) NOT NULL,
-  `medicacoes` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `sala`
---
-
-CREATE TABLE IF NOT EXISTS `sala` (
-  `sala` int(11) NOT NULL,
-  `idmedico` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `sala`
---
-
-INSERT INTO `sala` (`sala`, `idmedico`) VALUES
-(1, 1);
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `secretario`
---
-
-CREATE TABLE IF NOT EXISTS `secretario` (
-  `idSecretario` int(11) NOT NULL,
-  `nome` varchar(20) NOT NULL,
-  `data_nascimento` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  `ctps` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `status`
---
-
-CREATE TABLE IF NOT EXISTS `status` (
-  `idStatus` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `status`
---
-
-INSERT INTO `status` (`idStatus`, `status`) VALUES
-(1, 'chegar'),
-(2, 'aguardando'),
-(3, 'atendimento'),
-(4, 'atendido'),
-(5, 'ausente');
 
 -- --------------------------------------------------------
 
@@ -457,9 +306,169 @@ INSERT INTO `login` (`id`, `nome`, `email`, `senha`, `acesso`) VALUES
 (4, 'Renan Lima Alonso Santos aaaaa', 'michaeldo.saopaulino@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', ''),
 (5, 'joca', 'jupa.quim@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '1');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `medico`
+--
+
+CREATE TABLE `medico` (
+  `idMedico` int(11) NOT NULL,
+  `nome` varchar(20) NOT NULL,
+  `numeroProfissional` varchar(20) NOT NULL,
+  `dataNascimento` date NOT NULL,
+  `idEspecialidade` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `medico`
+--
+
+INSERT INTO `medico` (`idMedico`, `nome`, `numeroProfissional`, `dataNascimento`, `idEspecialidade`) VALUES
+(3, 'Daniel', '4234242', '2019-02-13', 1),
+(4, 'Cluadia', '4234242', '2019-02-06', 6),
+(5, 'Ana Maria', '432423', '2019-02-04', 3),
+(6, 'Paula', '43224', '2019-02-12', 4),
+(7, 'Sergio', '4234324', '2019-02-06', 4),
+(8, 'Gabriela', '433543', '2019-02-04', 2),
+(9, 'Alan', '3213123', '2019-02-19', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pacientes`
+--
+
+CREATE TABLE `pacientes` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(20) NOT NULL,
+  `nomeResponsavel` varchar(20) NOT NULL,
+  `sexo` varchar(10) NOT NULL,
+  `dataNascimento` date NOT NULL,
+  `estadoCivil` varchar(12) NOT NULL,
+  `indicacao` varchar(20) NOT NULL,
+  `cpf` varchar(13) NOT NULL,
+  `celular` varchar(14) NOT NULL,
+  `telefone` varchar(14) NOT NULL,
+  `telefoneAdicional` varchar(14) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `cep` varchar(10) NOT NULL,
+  `rua` varchar(100) NOT NULL,
+  `numero` int(7) NOT NULL,
+  `complemento` varchar(20) NOT NULL,
+  `bairro` varchar(20) NOT NULL,
+  `cidade` varchar(20) NOT NULL,
+  `estado` varchar(2) NOT NULL,
+  `convenio` varchar(20) NOT NULL,
+  `plano` varchar(20) NOT NULL,
+  `numeroConvenio` int(30) NOT NULL,
+  `dataConvenio` date NOT NULL,
+  `observacao` varchar(20) NOT NULL,
+  `status` int(2) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `pacientes`
+--
+
+INSERT INTO `pacientes` (`id`, `nome`, `nomeResponsavel`, `sexo`, `dataNascimento`, `estadoCivil`, `indicacao`, `cpf`, `celular`, `telefone`, `telefoneAdicional`, `email`, `cep`, `rua`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `convenio`, `plano`, `numeroConvenio`, `dataConvenio`, `observacao`, `status`) VALUES
+(2, 'Guilherme', 'Ana', 'Masculino', '2000-09-09', 'Namorando', 'Ana', '48977851890', '11997948992', '1124077895', '', 'santanaguisantos@gmail.co', '0713565', 'Rua zona', 234, 'Sesi', 'Jd.Adriana', 'Guarulhos', 'sp', 'Metrus', 'plano', 3432423, '2019-01-23', 'MI LINDA', 0),
+(7, 'Jeff', 'Thomas', 'Thomas', '2019-02-01', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', 'Thomas', '07077065', 'Rua Geraldo Augusto da Silva', 666, 'alo', 'Parque Continental I', 'Guarulhos', 'SP', 'Thomas', 'Thomas', 0, '2019-02-28', 'dsadsada', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `prontuario`
+--
+
+CREATE TABLE `prontuario` (
+  `idPaciente` int(11) NOT NULL,
+  `anotacoes` varchar(250) NOT NULL,
+  `problemas` varchar(250) NOT NULL,
+  `resumo` varchar(250) NOT NULL,
+  `medicacoes` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sala`
+--
+
+CREATE TABLE `sala` (
+  `sala` int(11) NOT NULL,
+  `idmedico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `sala`
+--
+
+INSERT INTO `sala` (`sala`, `idmedico`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `secretario`
+--
+
+CREATE TABLE `secretario` (
+  `idSecretario` int(11) NOT NULL,
+  `nome` varchar(20) NOT NULL,
+  `data_nascimento` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
+  `ctps` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `status`
+--
+
+CREATE TABLE `status` (
+  `idStatus` int(11) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `status`
+--
+
+INSERT INTO `status` (`idStatus`, `status`) VALUES
+(1, 'chegar'),
+(2, 'aguardando'),
+(3, 'atendimento'),
+(4, 'atendido'),
+(5, 'ausente');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `agenda`
+--
+ALTER TABLE `agenda`
+  ADD PRIMARY KEY (`idAgenda`),
+  ADD KEY `especialidade` (`especialidade`),
+  ADD KEY `especialista` (`especialista`),
+  ADD KEY `paciente` (`paciente`),
+  ADD KEY `status` (`status`);
+
+--
+-- Indexes for table `agenda_medico`
+--
+ALTER TABLE `agenda_medico`
+  ADD KEY `idMedico` (`idMedico`),
+  ADD KEY `idEsp` (`idEsp`);
+
+--
+-- Indexes for table `especialidades`
+--
+ALTER TABLE `especialidades`
+  ADD PRIMARY KEY (`idEsp`),
+  ADD KEY `idEspecialidade` (`idEsp`);
 
 --
 -- Indexes for table `login`
@@ -468,17 +477,93 @@ ALTER TABLE `login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `medico`
+--
+ALTER TABLE `medico`
+  ADD PRIMARY KEY (`idMedico`),
+  ADD KEY `idMedico` (`idMedico`),
+  ADD KEY `idEspecialidade` (`idEspecialidade`);
+
+--
+-- Indexes for table `pacientes`
+--
+ALTER TABLE `pacientes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`idStatus`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `agenda`
+--
+ALTER TABLE `agenda`
+  MODIFY `idAgenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `especialidades`
+--
+ALTER TABLE `especialidades`
+  MODIFY `idEsp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `medico`
+--
+ALTER TABLE `medico`
+  MODIFY `idMedico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `pacientes`
+--
+ALTER TABLE `pacientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `status`
+--
+ALTER TABLE `status`
+  MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `agenda`
+--
+ALTER TABLE `agenda`
+  ADD CONSTRAINT `especialidade` FOREIGN KEY (`especialidade`) REFERENCES `especialidades` (`idEsp`),
+  ADD CONSTRAINT `especialista` FOREIGN KEY (`especialista`) REFERENCES `medico` (`idMedico`),
+  ADD CONSTRAINT `paciente` FOREIGN KEY (`paciente`) REFERENCES `pacientes` (`id`),
+  ADD CONSTRAINT `status` FOREIGN KEY (`status`) REFERENCES `status` (`idStatus`);
+
+--
+-- Limitadores para a tabela `agenda_medico`
+--
+ALTER TABLE `agenda_medico`
+  ADD CONSTRAINT `idEsp` FOREIGN KEY (`idEsp`) REFERENCES `especialidades` (`idEsp`),
+  ADD CONSTRAINT `idMedico` FOREIGN KEY (`idMedico`) REFERENCES `medico` (`idMedico`);
+
+--
+-- Limitadores para a tabela `medico`
+--
+ALTER TABLE `medico`
+  ADD CONSTRAINT `idEspecialidade` FOREIGN KEY (`idEspecialidade`) REFERENCES `especialidades` (`idEsp`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
