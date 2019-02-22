@@ -1,15 +1,13 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.7.7
--- https://www.phpmyadmin.net/
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 19-Fev-2019 às 13:01
--- Versão do servidor: 10.3.12-MariaDB
--- PHP Version: 7.0.26
+-- Host: 127.0.0.1
+-- Generation Time: 22-Fev-2019 às 08:36
+-- Versão do servidor: 10.1.16-MariaDB
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `id8735486_lifeclin`
+-- Database: `lifeclin`
 --
 
 -- --------------------------------------------------------
@@ -304,7 +302,8 @@ CREATE TABLE `login` (
 INSERT INTO `login` (`id`, `nome`, `email`, `senha`, `acesso`) VALUES
 (1, 'Administrador', 'and@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', ''),
 (4, 'Renan Lima Alonso Santos aaaaa', 'michaeldo.saopaulino@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', ''),
-(5, 'joca', 'jupa.quim@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '1');
+(5, 'joca', 'jupa.quim@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '1'),
+(6, 'ifg', 'ifgdevteam@gmail.com', 'c83d6cba6b661a21681151aacfaf1254', '1');
 
 -- --------------------------------------------------------
 
@@ -364,7 +363,7 @@ CREATE TABLE `pacientes` (
   `numeroConvenio` int(30) NOT NULL,
   `dataConvenio` date NOT NULL,
   `observacao` varchar(20) NOT NULL,
-  `status` int(2) NOT NULL DEFAULT 1
+  `status` int(2) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -416,9 +415,8 @@ INSERT INTO `sala` (`sala`, `idmedico`) VALUES
 CREATE TABLE `secretario` (
   `idSecretario` int(11) NOT NULL,
   `nome` varchar(20) NOT NULL,
-  `data_nascimento` timestamp(6) NOT NULL DEFAULT current_timestamp(6) ON UPDATE current_timestamp(6),
-  `ctps` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `data_nascimento` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ;
 
 -- --------------------------------------------------------
 
@@ -506,37 +504,31 @@ ALTER TABLE `status`
 --
 ALTER TABLE `agenda`
   MODIFY `idAgenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
 --
 -- AUTO_INCREMENT for table `especialidades`
 --
 ALTER TABLE `especialidades`
   MODIFY `idEsp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `medico`
 --
 ALTER TABLE `medico`
   MODIFY `idMedico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- AUTO_INCREMENT for table `pacientes`
 --
 ALTER TABLE `pacientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
   MODIFY `idStatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- Constraints for dumped tables
 --
@@ -562,7 +554,6 @@ ALTER TABLE `agenda_medico`
 --
 ALTER TABLE `medico`
   ADD CONSTRAINT `idEspecialidade` FOREIGN KEY (`idEspecialidade`) REFERENCES `especialidades` (`idEsp`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
