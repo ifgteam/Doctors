@@ -464,43 +464,29 @@ if (request.readyState==4)
     // ao clicar para salvar ele executa a função do ajax
     $('#btnSave').click(function(){
         var url = $('#myForm').attr('action');
-        var data = $('#myForm').serialize();
-
-        $('#myForm').validate({
-
-          var constraints = {
-            email: {
-              // Email is required
-              presence: true,
-              // and must be an email (duh)
-              email: true
+              var data = $('#myForm').serialize();
+      $(function(){addPaciente();
+        //function
+        function addPaciente(){
+          $.ajax({
+            type: 'ajax',
+            method: 'post',
+            url: url,
+            data: data,
+            async: true,
+            dataType: 'json',
+            success: function(response){
+              $('#basicExampleModal').modal('hide');
+              $('#myForm')[0].reset();
+              mostrarPacientes();
             },
-          }
-          submitHandler: function(form){
-              $(function(){addPaciente();
-              //function
-              function addPaciente(){
-                $.ajax({
-                  type: 'ajax',
-                  method: 'post',
-                  url: url,
-                  data: data,
-                  async: true,
-                  dataType: 'json',
-                  success: function(response){
-                    $('#basicExampleModal').modal('hide');
-                    $('#myForm')[0].reset();
-                    mostrarPacientes();
-                  },
-                  error: function(xhr, status, error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    alert(err.Message);
-                  }
-                });
-              }
-            });
-          }  
-        });
+            error: function(xhr, status, error) {
+              var err = eval("(" + xhr.responseText + ")");
+              alert(err.Message);
+            }
+          });
+        }
+      });
     });  
   
     //função para atualizar o cadastro do paciente

@@ -11,7 +11,7 @@ class Doctors extends CI_Controller {
   function index($indice=null){
     $tmp = $this->session->userdata('usuario');
     $acesso = $tmp['acesso'];
-    if($acesso == 1 || $acesso == 2 || $acesso == 3){
+    if($acesso == 1 || 2 || 3){
     if($indice==3){
         $data['msg'] = "Incluido com sucesso" ;      
        $this->load->view('includes/scs_msg',$data);
@@ -24,7 +24,7 @@ class Doctors extends CI_Controller {
     $this->load->model('AgendamentoModel', 'especialidades');
     $dados['especialidades'] = $this->especialidades->buscaEspecialidade();
     $dados2['pacientes'] = $this->especialidades->buscaEspecialidade();
-    if($acesso == 3 || $acesso == 1){   
+    if($acesso == 3){   
     $this->load->view('agenda/agenda2',$dados,$dados2);
 
     }else{
@@ -75,7 +75,7 @@ class Doctors extends CI_Controller {
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
         $this->load->view('component/navbar');
-        if($acesso == 2 || $acesso == 1){
+        if($acesso == 2){
         $this->load->model('PacienteModel','pacientes');
         $dados['pacientes'] = $this->pacientes->get_pacientes();
         $this->load->view('pacientes/pacientesList',$dados);
@@ -210,6 +210,15 @@ public function myformAjax4() {
 public function myformAjax6() { 
     $result = $this->db->get("medico")->result();
     echo json_encode($result);
+}
+public function teste(){
+
+
+$i = 1;
+do {
+    $i;
+    $i++;
+} while ($i <= 22);
 }
 
 }

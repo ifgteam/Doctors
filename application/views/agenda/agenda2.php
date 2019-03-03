@@ -113,7 +113,7 @@ button:hover {
   </div>
   <div class="tab" style="margin-left:35%;">Selecione a data:
   <select  name="date" id="date" class="browser-default custom-select mb-4">
-      <option value="" selected>Escolha a hora</option>
+      <option value="" selected>Escolha a data</option>
 </select>
   </div>
   <div class="tab">Hora:
@@ -299,7 +299,7 @@ $(document).ready(function() {
                 $('select[name="especialista"]').empty();
             }
         });
-
+   //pegar data
       $('select[name="especialista"]').on('change', function() {
             var idEspa = $(this).val();
             console.log(idEspa);
@@ -320,6 +320,7 @@ $(document).ready(function() {
                 $('select[name="date"]').empty();
             }
         });
+     
         $('select[name="date"]').on('change', function() {
             var data2 = $(this).val();
             console.log(data2);
@@ -332,79 +333,121 @@ $(document).ready(function() {
                         $.each(response,function(index,data){
                 $('#hora').find('option').not(':first').remove();
               
-                $('#hora').append('<option value="'+data['hora[1]']+'">'+data['hora[1]']+'</option>');
+              debugger;
+              if( data['hora[1]'] >= data['inicio_almoco'] && data['hora[1]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[1]']+'">'+data['hora[1]']+'</option>');
+              } else if(data['hora[1]'] != null && data['hora_disp[1]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[1]']+'">'+data['hora[1]']+'</option>');
+              }
 
-               if(data['hora[2]'] != null){
-                $('#hora').append('<option value="'+data['hora[2]']+'">'+data['hora[2]']+'</option>');
-             } 
-             if(data['hora[3]'] != null){
-                $('#hora').append('<option value="'+data['hora[3]']+'">'+data['hora[3]']+'</option>');
-             }
-              if(data['hora[4]'] != null){
-                $('#hora').append('<option value="'+data['hora[4]']+'">'+data['hora[4]']+'</option>');
-             }
-              if(data['hora[5]'] != null){
-                $('#hora').append('<option value="'+data['hora[5]']+'">'+data['hora[5]']+'</option>');
-             }
-              if(data['hora[6]'] != null){
-                $('#hora').append('<option value="'+data['hora[6]']+'">'+data['hora[6]']+'</option>');
-             }
-              if(data['hora[7]'] != null){
-                $('#hora').append('<option value="'+data['hora[7]']+'">'+data['hora[7]']+'</option>');
-             }
-              if(data['hora[8]'] != null){
-                $('#hora').append('<option value="'+data['hora[8]']+'">'+data['hora[8]']+'</option>');
-             } if(data['hora[9]'] != null){
-                $('#hora').append('<option value="'+data['hora[9]']+'">'+data['hora[9]']+'</option>');
-             } if(data['hora[10]'] != null){
-                $('#hora').append('<option value="'+data['hora[10]']+'">'+data['hora[10]']+'</option>');
-             }
-              if(data['hora[11]'] != null){
-                $('#hora').append('<option value="'+data['hora[11]']+'">'+data['hora[11]']+'</option>');
-             } 
-             if(data['hora[12]'] != null){
-                $('#hora').append('<option value="'+data['hora[12]']+'">'+data['hora[12]']+'</option>');
-             }
+              if( data['hora[2]'] >= data['inicio_almoco'] && data['hora[2]'] < data['fim_almoco']   ){
+                $('#hora').append('<option disabled value="'+data['hora[2]']+'">'+data['hora[2]']+'</option>');
+              } else if(data['hora[2]'] != null && data['hora_disp[2]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[2]']+'">'+data['hora[2]']+'</option>');
+              }
+
+              if( data['hora[3]'] >= data['inicio_almoco']&& data['hora[3]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[3]']+'">'+data['hora[3]']+'</option>');
+              } else if(data['hora[3]'] != null  && data['hora_disp[3]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[3]']+'">'+data['hora[3]']+'</option>');
+              }
+              
+              if( data['hora[4]'] >= data['inicio_almoco']&& data['hora[4]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[4]']+'">'+data['hora[4]']+'</option>');
+              } else if(data['hora[4]'] != null  && data['hora_disp[4]']!= 0){
+                $('#hora').append('<option  value="'+data['hora[4]']+'">'+data['hora[4]']+'</option>');
+              }
+              if( data['hora[5]'] >= data['inicio_almoco'] && data['hora[5]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[5']+'">'+data['hora[5]']+'</option>');
+              } else if(data['hora[5]'] != null  && data['hora_disp[5]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[5]']+'">'+data['hora[5]']+'</option>');
+              }
+              if( data['hora[6]'] >= data['inicio_almoco'] && data['hora[6]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[6]']+'">'+data['hora[6]']+'</option>');
+              } else if(data['hora[6]'] != null  && data['hora_disp[6]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[6]']+'">'+data['hora[6]']+'</option>');
+              }
+              if( data['hora[7]'] >= data['inicio_almoco'] && data['hora[7]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[7]']+'">'+data['hora[7]']+'</option>');
+              } else if(data['hora[7]'] != null  && data['hora_disp[7]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[7]']+'">'+data['hora[7]']+'</option>');
+              }
+              if( data['hora[8]'] >= data['inicio_almoco'] && data['hora[8]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[8]']+'">'+data['hora[8]']+'</option>');
+              } else if(data['hora[8]'] != null  && data['hora_disp[8]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[8]']+'">'+data['hora[8]']+'</option>');
+              }
+              if( data['hora[9]'] >= data['inicio_almoco'] && data['hora[9]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[9]']+'">'+data['hora[9]']+'</option>');
+              } else if(data['hora[9]'] != null  && data['hora_disp[9]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[9]']+'">'+data['hora[9]']+'</option>');
+              }
+              if( data['hora[10]'] >= data['inicio_almoco'] && data['hora[10]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[10]']+'">'+data['hora[10]']+'</option>');
+              } else if(data['hora[10]'] != null  && data['hora_disp[10]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[10]']+'">'+data['hora[10]']+'</option>');
+              }
+              if( data['hora[11]'] >= data['inicio_almoco'] && data['hora[11]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[11]']+'">'+data['hora[11]']+'</option>');
+              } else if(data['hora[11]'] != null  && data['hora_disp[11]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[11]']+'">'+data['hora[11]']+'</option>');
+              }
+              if( data['hora[12]'] >= data['inicio_almoco'] && data['hora[12]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[12]']+'">'+data['hora[12]']+'</option>');
+              } else if(data['hora[12]'] != null  && data['hora_disp[12]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[12]']+'">'+data['hora[12]']+'</option>');
+              }
+              if( data['hora[13]'] >= data['inicio_almoco'] && data['hora[13]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[13]']+'">'+data['hora[13]']+'</option>');
+              } else if(data['hora[13]'] != null  && data['hora_disp[13]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[13]']+'">'+data['hora[13]']+'</option>');
+              }
+              if( data['hora[14]'] >= data['inicio_almoco'] && data['hora[14]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[14]']+'">'+data['hora[14]']+'</option>');
+              } else if(data['hora[14]'] != null  && data['hora_disp[14]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[14]']+'">'+data['hora[14]']+'</option>');
+              }
+              if( data['hora[15]'] >= data['inicio_almoco'] && data['hora[15]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[15]']+'">'+data['hora[15]']+'</option>');
+              } else if(data['hora[15]'] != null  && data['hora_disp[15]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[15]']+'">'+data['hora[15]']+'</option>');
+              }
+              if( data['hora[16]'] >= data['inicio_almoco'] && data['hora[16]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[16]']+'">'+data['hora[16]']+'</option>');
+              } else if(data['hora[16]'] != null  && data['hora_disp[16]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[16]']+'">'+data['hora[16]']+'</option>');
+              }
+              if( data['hora[17]'] >= data['inicio_almoco'] && data['hora[17]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[17]']+'">'+data['hora[17]']+'</option>');
+              } else if(data['hora[17]'] != null  && data['hora_disp[17]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[17]']+'">'+data['hora[17]']+'</option>');
+              }
+              if( data['hora[18]'] >= data['inicio_almoco'] && data['hora[18]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[18]']+'">'+data['hora[18]']+'</option>');
+              } else if(data['hora[18]'] != null  && data['hora_disp[18]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[18]']+'">'+data['hora[18]']+'</option>');
+              }
+              if( data['hora[19]'] >= data['inicio_almoco'] && data['hora[19]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[19]']+'">'+data['hora[19]']+'</option>');
+              } else if(data['hora[19]'] != null  && data['hora_disp[19]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[19]']+'">'+data['hora[19]']+'</option>');
+              }
+              if( data['hora[20]'] >= data['inicio_almoco'] && data['hora[20]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[20]']+'">'+data['hora[20]']+'</option>');
+              } else if(data['hora[20]'] != null  && data['hora_disp[20]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[20]']+'">'+data['hora[20]']+'</option>');
+              }
+              if( data['hora[21]'] >= data['inicio_almoco'] && data['hora[21]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[21]']+'">'+data['hora[21]']+'</option>');
+              } else if(data['hora[21]'] != null  && data['hora_disp[21]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[21]']+'">'+data['hora[21]']+'</option>');
+              }
+              if( data['hora[22]'] >= data['inicio_almoco'] && data['hora[22]'] < data['fim_almoco'] ){
+                $('#hora').append('<option disabled value="'+data['hora[22]']+'">'+data['hora[22]']+'</option>');
+              } else if(data['hora[22]'] != null  && data['hora_disp[22]'] != 0){
+                $('#hora').append('<option  value="'+data['hora[22]']+'">'+data['hora[22]']+'</option>');
+              }
              
-             if(data['hora[13]'] != null){
-                $('#hora').append('<option value="'+data['hora[13]']+'">'+data['hora[13]']+'</option>');
-             } if(data['hora[14]'] != null){
-                $('#hora').append('<option value="'+data['hora[14]']+'">'+data['hora[14]']+'</option>');
-             } if(data['hora[15]'] != null){
-                $('#hora').append('<option value="'+data['hora[15]']+'">'+data['hora[15]']+'</option>');
-             } if(data['hora[16]'] != null){
-                $('#hora').append('<option value="'+data['hora[16]']+'">'+data['hora[16]']+'</option>');
-             } if(data['hora[17]'] != null){
-                $('#hora').append('<option value="'+data['hora[17]']+'">'+data['hora[17]']+'</option>');
-             } if(data['hora[18]'] != null){
-                $('#hora').append('<option value="'+data['hora[18]']+'">'+data['hora[18]']+'</option>');
-             } if(data['hora[19]'] != null){
-                $('#hora').append('<option value="'+data['hora[19]']+'">'+data['hora[19]']+'</option>');
-             } if(data['hora[20]'] != null){
-                $('#hora').append('<option value="'+data['hora[20]']+'">'+data['hora[20]']+'</option>');
-             } if(data['hora[21]'] != null){
-                $('#hora').append('<option value="'+data['hora[21]']+'">'+data['hora[21]']+'</option>');
-             } if(data['hora[22]'] != null){
-                $('#hora').append('<option value="'+data['hora[22]']+'">'+data['hora[22]']+'</option>');
-             } if(data['hora[23]'] != null){
-                $('#hora').append('<option value="'+data['hora[23]']+'">'+data['hora[23]']+'</option>');
-             } if(data['hora[24]'] != null){
-                $('#hora').append('<option value="'+data['hora[24]']+'">'+data['hora[24]']+'</option>');
-             } if(data['hora[25]'] != null){
-                $('#hora').append('<option value="'+data['hora[25]']+'">'+data['hora[25]']+'</option>');
-             } if(data['hora[26]'] != null){
-                $('#hora').append('<option value="'+data['hora[26]']+'">'+data['hora[26]']+'</option>');
-             } if(data['hora[27]'] != null){
-                $('#hora').append('<option value="'+data['hora[27]']+'">'+data['hora[27]']+'</option>');
-             } if(data['hora[28]'] != null){
-                $('#hora').append('<option value="'+data['hora[28]']+'">'+data['hora[28]']+'</option>');
-             } 
-            if(data['hora[29]'] != null){
-                $('#hora').append('<option value="'+data['hora[29]']+'">'+data['hora[29]']+'</option>');
-             } 
-            if(data['hora[30]'] != null){
-                $('#hora').append('<option value="'+data['hora[30]']+'">'+data['hora[30]']+'</option>');
-             }
 
 
 
