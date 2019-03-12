@@ -11,7 +11,7 @@ class Doctors extends CI_Controller {
   function index($indice=null){
     $tmp = $this->session->userdata('usuario');
     $acesso = $tmp['acesso'];
-    if($acesso == 1 || 2 || 3){
+    if($acesso == 1 || $acesso == 2 || $acesso == 3){
     if($indice==3){
         $data['msg'] = "Incluido com sucesso" ;      
        $this->load->view('includes/scs_msg',$data);
@@ -75,7 +75,7 @@ class Doctors extends CI_Controller {
         $this->load->helper('url');
         $this->load->view('component/cabecalho');
         $this->load->view('component/navbar');
-        if($acesso == 2){
+        if($acesso == 2 || $acesso == 1){
         $this->load->model('PacienteModel','pacientes');
         $dados['pacientes'] = $this->pacientes->get_pacientes();
         $this->load->view('pacientes/pacientesList',$dados);

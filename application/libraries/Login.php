@@ -24,6 +24,14 @@ class Login{
         }
     }
 
+    public function redefinirsenha($data){
+        $aux['senhaantiga'] = $data['senhaantiga'];
+        $update['senha']   = md5($data['senha']);
+        $this->db->where('senha',$aux);
+        $this->db->update('login',$update);
+        return $this->db->update_id();
+    }
+
 }
 
 ?>

@@ -52,5 +52,46 @@ class LoginModel extends CI_model{
              
          }
     }
+
+    public function redefinirsenha(){
+        if(sizeof($_POST) == 0){
+            return;
+        }
+        $this->form_validation->set_rules('email', 'Email', 'required'); //regras para os campos de formulario
+        $this->form_validation->set_rules('senha', 'Senha', 'required');
+        if($this->form_validation->run()){
+        $data = $this->input->post();
+             
+        $login = new Login();
+        $user = $login->validate($data);
+        if($user != null){
+            $this->session->set_userdata('usuario', $user);
+            redirect('Doctors/redefinirsenha');
+
+        }else{
+            echo"<script language='javascript' type='text/javascript'>alert('Usuario ou senha incorreto!')</script>";
+            //usuario ou senha incorreta
+        }
+    }else{
+        echo"<script language='javascript' type='text/javascript'>alert('Algum campo esta vazio... tente novamente')</script>";
+        // dados do form estao incorretos
+        
+    }
+    }
+
+    public function novasenha(){
+        $tmp = $this->session->userdata('usuario');
+        $aux['senhaantiga'] = $tmp['senha'];
+        $data = $this->input->post();
+        $data['senhaantiga']= $aux['senhaantiga'];
+        $login =  new Login();
+        $user = $login->redefinirsenha($data);
+        if($user != null){
+            echo"<script language='javascript' type='text/javascript'>alert('Cadastro efetuado com Sucesso');</script>";
+        }
+        else{
+            echo"<script language='javascript' type='text/javascript'>alert('Email já cadastrado');</script>";
+        }
+    }
 }
 ?>
