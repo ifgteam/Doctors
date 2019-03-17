@@ -133,22 +133,22 @@
 
           <div class=" mb-5">
             <label>CPF</label>
-            <input type="text" id="cpf" name="cpf" class="form-control validate">
+            <input type="text" id="cpf" name="cpf" class="form-control validate cpf">
           </div>
 
           <div class=" mb-5">
             <label>Telefone Celular</label>
-            <input type="text" id="celular" name="celular" class="form-control validate">
+            <input type="text" id="celular" name="celular" class="form-control validate cel">
           </div>
 
           <div class=" mb-5">
             <label>Telefone Residencial</label>
-            <input type="text" id="telfixo" name="telfixo" class="form-control validate">
+            <input type="text" id="telfixo" name="telfixo" class="form-control validate tel">
           </div>
 
           <div class=" mb-5">
             <label>Telefone Adicional</label>
-            <input type="text" id="teladicio" name="teladicio" class="form-control validate">
+            <input type="text" id="teladicio" name="teladicio" class="form-control tel">
           </div>
 
           <div class=" mb-5">
@@ -168,7 +168,7 @@
 
           <div class=" mb-5">
             <label>Complemento</label>
-            <input type="text" id="complemento" name="complemento" class="form-control validate">
+            <input type="text" id="complemento" name="complemento" class="form-control">
           </div>
 
           <div class=" mb-5">
@@ -198,7 +198,7 @@
 
           <div class=" mb-5">
             <label>Numero do convenio</label>
-            <input type="text" id="numconvenio" name="numconvenio" class="form-control validate">
+            <input type="text" id="numconvenio" name="numconvenio" class="form-control validate tel">
           </div>
 
           <div class=" mb-5">
@@ -266,27 +266,27 @@
 
         <div class=" mb-5">
           <label>Indicação</label>
-          <input type="text" id="indicacao" name="indicacao" class="form-control validate">
+          <input type="text" id="indicacao" name="indicacao" class="form-control">
         </div>
 
         <div class=" mb-5">
           <label>CPF</label>
-          <input type="text" id="cpf" name="cpf" class="form-control validate">
+          <input type="text" id="cpf" name="cpf" class="form-control validate cpf">
         </div>
 
         <div class=" mb-5">
           <label>Telefone Celular</label>
-          <input type="text" id="celular" name="celular" class="form-control validate">
+          <input type="text" id="celular" name="celular" class="form-control validate cel">
         </div>
 
         <div class=" mb-5">
           <label>Telefone Residencial</label>
-          <input type="text" id="telfixo" name="telfixo" class="form-control validate">
+          <input type="text" id="telfixo" name="telfixo" class="form-control validate tel">
         </div>
 
         <div class=" mb-5">
           <label>Telefone Adicional</label>
-          <input type="text" id="teladicio" name="teladicio" class="form-control validate">
+          <input type="text" id="teladicio" name="teladicio" class="form-control">
         </div>
 
         <div class=" mb-5">
@@ -306,7 +306,7 @@
 
         <div class=" mb-5">
           <label>Complemento</label>
-          <input type="text" id="complemento" name="complemento" class="form-control validate">
+          <input type="text" id="complemento" name="complemento" class="form-control">
         </div>
 
         <div class=" mb-5">
@@ -336,7 +336,7 @@
 
         <div class=" mb-5">
           <label>Numero do convenio</label>
-          <input type="text" id="numconvenio" name="numconvenio" class="form-control validate">
+          <input type="text" id="numconvenio" name="numconvenio" class="form-control validate tel">
         </div>
 
         <div class=" mb-5">
@@ -463,8 +463,22 @@ if (request.readyState==4)
   
     // ao clicar para salvar ele executa a função do ajax
     $('#btnSave').click(function(){
+      $('.validate').each(function(){
+        if($(this).attr('name') === 'cpf'){
+          
+        }
+        if( $(this).val() === "" ){
+          $(this).addClass('input-error');
+          alert('preencha corretamente os campos');
+          return false;
+          throw new Error("alguns campos não foram preenchidos corretamente");
+        }else{
+          $(this).removeClass('input-error');
+        }
+      });
+      return false;
         var url = $('#myForm').attr('action');
-              var data = $('#myForm').serialize();
+        var data = $('#myForm').serialize();
       $(function(){addPaciente();
         //function
         function addPaciente(){

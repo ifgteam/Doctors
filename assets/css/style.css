@@ -53,3 +53,6 @@ h1.h1-concluido{
 strong{
   font-weight: 700;
 }
+.input-error{
+  border: 1px solid red;
+}
