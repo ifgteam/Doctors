@@ -476,6 +476,7 @@ if (request.readyState==4)
           $(this).removeClass('input-error');
         }
       });
+      return false;
         var url = $('#myForm').attr('action');
         var data = $('#myForm').serialize();
       $(function(){addPaciente();
@@ -504,19 +505,6 @@ if (request.readyState==4)
   
     //função para atualizar o cadastro do paciente
     $('#btnAtt').click(function(){
-      $('.validate').each(function(){
-        if($(this).attr('name') === 'cpf'){
-          
-        }
-        if( $(this).val() === "" ){
-          $(this).addClass('input-error');
-          alert('preencha corretamente os campos');
-          return false;
-          throw new Error("alguns campos não foram preenchidos corretamente");
-        }else{
-          $(this).removeClass('input-error');
-        }
-      });
         var url = $('#myFormEdit').attr('action');
               var data = $('#myFormEdit').serialize();
   

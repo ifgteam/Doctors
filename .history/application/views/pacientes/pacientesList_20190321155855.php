@@ -476,6 +476,7 @@ if (request.readyState==4)
           $(this).removeClass('input-error');
         }
       });
+      return false;
         var url = $('#myForm').attr('action');
         var data = $('#myForm').serialize();
       $(function(){addPaciente();
